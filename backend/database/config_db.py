@@ -1,10 +1,10 @@
 import sqlite3
 
-def connect_to_db():
+def connect_to_db():                            #funzione per connettersi
     conn = sqlite3.connect('./database.db')
     return conn
 
-def init_db_table():
+def init_db_table():                            #funzione per inizializzare il DB creando le tabelle necessarie
     try:
         conn = connect_to_db()
 
