@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CartService } from 'src/app/services/cart.service';
 import { FilmService } from 'src/app/services/film.service';
 import { Film } from 'src/app/shared/models/Film';
+import { Schedule } from 'src/app/shared/models/Schedule';
 
 @Component({
   selector: 'app-film-page',
@@ -12,22 +12,34 @@ import { Film } from 'src/app/shared/models/Film';
 
 export class FilmPageComponent {
   film!: Film;
+  schedule?: Schedule[];
+  totalPrice?: number;
 
-  constructor(activatedRoute:ActivatedRoute, filmService:FilmService, private cartService:CartService, private router:Router) {
+  constructor(activatedRoute:ActivatedRoute, filmService:FilmService, private router:Router) {
     activatedRoute.params.subscribe((params) => {
-      if(params.id) {
-        filmService.getFilmById(params.name).subscribe(serverFilm => {
-          serverFilm = JSON.parse(JSON.stringify(serverFilm));
-          this.film = serverFilm;
+      if(params.name) {
+        filmService.getFilmByName(params.name).subscribe(serverFilm => {
+          this.film = serverFilm[0];
           
           console.log(this.film);
+
+          filmService.getFilmSchedule(params.name).subscribe(serverFilmSchedule => {
+            this.schedule = serverFilmSchedule;
+            
+            console.log(this.schedule);
+          });
         });
       }
     });
   }
 
-  addToCart() {
-    this.cartService.addToCart(this.film);
-    this.router.navigateByUrl('/cart-page');
+  changeRentDays(film:Film, nTicketsInString:string) {
+    const nTickets = parseInt(nTicketsInString);
+    film.price = 1;
+    this.totalPrice = film.price * nTickets;
+  }
+
+  bookTickets() {
+    
   }
 }

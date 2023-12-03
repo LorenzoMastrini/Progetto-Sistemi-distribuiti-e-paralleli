@@ -1,23 +1,8 @@
 .container {
-    position: absolute;
-    left: 15rem; /*ampiezza della barra laterale*/
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-    margin: 3rem;
-}
-  
-.container > * {
-    min-width: 10rem;
-    max-width: 40rem;
-}
-
-img {
-    border-radius: 1.5rem;
-    object-fit: cover;
-    width: 17rem;
-    height: 25rem;
-    margin: 1rem;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .info {
@@ -27,7 +12,8 @@ img {
     flex: 1 0;
     padding: 2rem;
     color: white;
-    margin-left: 1rem;
+    justify-content: center;
+    align-items: center;
 }
 
 .name{

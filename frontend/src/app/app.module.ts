@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/partials/header/header.component';
 import { HomeComponent } from './components/pages/home/home.component';
 import { FilmPageComponent } from './components/pages/film-page/film-page.component';
-import { CartPageComponent } from './components/pages/cart-page/cart-page.component';
 import { TitleComponent } from './components/partials/title/title.component';
 import { NotFoundComponent } from './components/partials/not-found/not-found.component';
 import { MatSliderModule } from '@angular/material/slider';
@@ -25,7 +24,6 @@ import { DefaultButtonComponent } from './components/partials/default-button/def
     HeaderComponent,
     HomeComponent,
     FilmPageComponent,
-    CartPageComponent,
     TitleComponent,
     NotFoundComponent,
     LoginPageComponent,

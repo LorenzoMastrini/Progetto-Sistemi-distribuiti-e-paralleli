@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Film } from '../shared/models/Film';
 import { HttpClient } from '@angular/common/http';
-import { FILMS_BY_ID_URL, FILMS_URL } from '../shared/constants/urls';
+import { FILMS_BY_ID_URL, FILMS_URL, SCHEDULE_FILM_URL } from '../shared/constants/urls';
 import { Observable } from 'rxjs';
+import { Schedule } from '../shared/models/Schedule';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,11 @@ export class FilmService {
     return this.http.get<Film[]>(FILMS_URL);
   }
 
-  getFilmById(filmId: string): Observable<Film> {
-    return this.http.get<Film>(FILMS_BY_ID_URL + filmId);
+  getFilmByName(filmName: string): Observable<any> {
+    return this.http.get<any>(FILMS_BY_ID_URL + filmName);
+  }
+
+  getFilmSchedule(filmName: string): Observable<Schedule[]> {
+    return this.http.get<Schedule[]>(SCHEDULE_FILM_URL + filmName);
   }
 }

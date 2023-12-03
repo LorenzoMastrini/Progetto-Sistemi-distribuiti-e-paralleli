@@ -1,11 +1,11 @@
 <app-not-found [visible]="!films || !films.length"
-                resetLinkText="Cerca altro">
+                resetLinkText="Torna alla home">
 </app-not-found>
-<div>
+
 <ul>
     <li *ngFor="let film of films">
         <!--uso [] per dati dinamici-->
-        <a routerLink="/film/{{film.id}}"
+        <a routerLink="/film/{{film.name}}"
             [ngStyle]="{
                 'background-image': 'url(' + film.imageUrl + ')',
                 'background-size': 'cover'  }">
@@ -22,4 +22,3 @@
         </a>
     </li>
 </ul>
-</div>

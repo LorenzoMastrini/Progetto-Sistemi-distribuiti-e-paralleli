@@ -7,4 +7,6 @@ export const FILMS_BY_SEARCH_URL = FILMS_URL + '/search/'; //url per ottenere i 
 export const FILMS_BY_GENRE_URL = FILMS_URL + '/genre/'; //url per ottenere i film in base al genere ('/' alla fine sarà seguito dal genere)
 export const FILMS_BY_ID_URL = FILMS_URL + '/'; //url per ottenere i film in base all'id ('/' alla fine sarà seguito dall'id)
 
+export const SCHEDULE_FILM_URL = BASE_URL + '/api/schedule/'; //url per ottenere i film in base all'id ('/' alla fine sarà seguito dall'id)
+
 export const USER_LOGIN_URL = BASE_URL + '/api/users/login'; //url per la pagina di login
