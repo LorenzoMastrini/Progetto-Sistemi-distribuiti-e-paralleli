@@ -1,0 +1,23 @@
+<header>
+    <div class="container">
+        <a routerLink="/" class="logo">Kinetoscope</a>
+        <nav>
+            <ul>
+                <!--mostro il pulsante login solo se l'utente non è autenticato-->
+                <li *ngIf="!isAuth">
+                    <a routerLink="/login">Login</a>
+                </li>
+
+                <!--mostro il menu utente solo se l'utente è autenticato-->
+                <li *ngIf="isAuth" class="menu-container">
+                    <a routerLink="/dashboard">{{ user.name }}</a>
+                    <div class="menu">
+                        <a routerLink="/profile">Profilo</a>
+                        <a routerLink="/orders">Ordini</a>
+                        <a (click)="logout()">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>

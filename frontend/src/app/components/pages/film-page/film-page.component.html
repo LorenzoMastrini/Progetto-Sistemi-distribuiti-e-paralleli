@@ -1,0 +1,70 @@
+<app-not-found [visible]="!film"
+                notFoundMessage="Film non trovato!"
+                resetLinkText="Torna alla Homepage">
+</app-not-found>
+
+<div *ngIf="film" class="container">
+    <img [src]="film.imageUrl" [alt]="film.name"/>
+
+    <div class="info">
+        <div class="header">
+            <span class="name">
+                {{ film.name }}
+            </span>
+        </div>
+        <!--
+        <div class="rating">
+            <star-rating 
+                [value]="film.stars"
+                [totalStars]="5"
+                checkedcolor="red"
+                uncheckedcolor="black"
+                size="25px"
+                [readonly]="true">
+            </star-rating>
+        </div>
+        -->
+
+        <div class="general">
+            <span class="duration">
+              {{ film.duration }} min
+            </span>
+            <div class="tags">
+                <a *ngFor="let tag of film.genres" routerLink="/tag/{{tag}}">
+                    {{ tag }}
+                </a>
+            </div>
+        </div>
+        
+        <div class="description">
+            <span>
+                {{ film.description }}
+            </span>
+        </div>
+
+        <div class="details">
+            <div class="director">
+                <span>
+                    <strong>Regista: </strong>{{ film.director }}
+                </span>
+            </div>
+
+            <div class="origins">
+                <span *ngFor="let origin of film.origins">
+                    <strong>Paese di produzione: </strong> {{ origin }}
+                </span>
+            </div>
+        </div>
+        
+        <div class="price">
+            <span>
+                {{ film.price | currency }}
+            </span>
+        </div>
+        
+        <div class="footer">
+            <button (click)="addToCart()">Aggiungi al carrello</button>
+            <span class="list">♥</span>
+        </div>
+    </div>
+</div>

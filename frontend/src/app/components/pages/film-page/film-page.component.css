@@ -1,0 +1,122 @@
+.container {
+    position: absolute;
+    left: 15rem; /*ampiezza della barra laterale*/
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 3rem;
+}
+  
+.container > * {
+    min-width: 10rem;
+    max-width: 40rem;
+}
+
+img {
+    border-radius: 1.5rem;
+    object-fit: cover;
+    width: 17rem;
+    height: 25rem;
+    margin: 1rem;
+}
+
+.info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0;
+    padding: 2rem;
+    color: white;
+    margin-left: 1rem;
+}
+
+.name{
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.general {
+    color: lightgray;
+    font-size: 18px;
+    display: flex;
+}
+
+.duration {
+    padding-right: 5rem;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tags a {
+    padding-right: 0.5rem;
+    margin: none;
+    color: lightgray;
+}
+
+.tags a:hover {
+    color: white;
+}
+
+.description {
+    font-size: 18px;
+    padding-top: 1.5rem;
+    color: lightgray;
+}
+
+.details {
+    padding-top: 7rem;
+}
+
+.origins, .director, .year {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0.5rem 0;
+}
+
+.price{
+    font-size: 1.8rem;
+    margin: 2rem 2rem 2rem 0;
+    color: green;
+}
+
+.price::before{
+    content: "Price: ";
+    color: darkgrey;
+}
+
+.footer {
+    display: flex;
+    height: 4rem;
+}
+
+button {
+    color: black;
+    background: white;
+    border: none;
+    font-size: 1.2rem;
+    border-radius: 10rem;
+    padding: 0 1.5rem;
+    outline: none;
+}
+
+button:hover{
+    opacity: 0.9;
+    cursor: pointer;
+}
+
+.list {
+    text-align: center;
+    width: 4rem;
+    color: #e72929;
+    font-size: 2.5rem;
+    border: 1px solid lightgray;
+    border-radius: 50%;
+    margin-left: 50px;
+}
+
+.favorite.not{
+    color: grey;
+}

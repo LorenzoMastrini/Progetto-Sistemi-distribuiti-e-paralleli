@@ -1,0 +1,55 @@
+ul {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: wrap;
+    flex-wrap: wrap;
+    list-style-type: none;
+    padding: 0;
+}
+
+li a {
+    height: 22rem;
+    width: 15rem;
+    border: 0;
+    border-radius: 1rem;
+    margin: 1rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    color: white;
+    position: relative;
+}
+
+li a:hover {
+    opacity: 0.9;
+    cursor: pointer;
+}
+
+.content {
+    align-items: center;
+    color: white;
+    display: flex;
+    padding: 0 0.5rem;
+    height: 4rem;
+    border: 0;
+    margin-top: auto;
+    background-color: rgba(34, 34, 34, 0.719);
+    backdrop-filter: blur(4px);
+    justify-content: space-between;
+    position: relative;
+}
+
+.name {
+    /*padding-bottom: 1rem; per spostarlo verso l'alto*/
+    font-size: 15px;
+}
+
+.content button {
+    color: black;
+    font-size: 13px;
+    background-color: white;
+    border-radius: 1rem;
+    height: 1.5rem;
+    border: none;
+}

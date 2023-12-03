@@ -1,0 +1,25 @@
+<app-not-found [visible]="!films || !films.length"
+                resetLinkText="Cerca altro">
+</app-not-found>
+<div>
+<ul>
+    <li *ngFor="let film of films">
+        <!--uso [] per dati dinamici-->
+        <a routerLink="/film/{{film.id}}"
+            [ngStyle]="{
+                'background-image': 'url(' + film.imageUrl + ')',
+                'background-size': 'cover'  }">
+            
+            <div class="content" >
+                <p class="name">
+                    {{film.name}}
+                </p>
+
+                <button>
+                    Prenota
+                </button>
+            </div>
+        </a>
+    </li>
+</ul>
+</div>
