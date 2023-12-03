@@ -70,7 +70,7 @@ def get_film(film_name):                          #funzione per che interroga il
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-@app.route('/api/users', methods=['GET'])
+@app.route('/api/films', methods=['GET'])
 def api_get_films():
     return jsonify(get_films())                                 #ritorno l'output della funzione get_film() in JSON per l'invio dei dati
 
