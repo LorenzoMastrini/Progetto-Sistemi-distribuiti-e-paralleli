@@ -1,6 +1,6 @@
 import sqlite3
 from database.config_db import connect_to_db
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 def get_films():                                            #funzione che interroga il DB e restituisce la lista di tutti i film in un dictionary
@@ -66,28 +66,45 @@ def get_film(film_name):                          #funzione per che interroga il
     
     return film
 
+def reserve(reserve_info):                          #funzione per la prenotazione dei posti: invia al DB una query di update per aggiornare i posti disponibili 
+    try:
+        conn = connect_to_db()
+        cur = conn.cursor()
+
+        cur.execute("SELECT seats_available FROM schedule WHERE time = ? AND room_id = ?", (reserve_info["time"], reserve_info["room_id"]))
+        row = cur.fetchone()
+
+        cur.execute("UPDATE schedule SET seats_available = ? WHERE time = ? AND room_id = ?", (row[0] - reserve_info["n_seats"], reserve_info["time"], reserve_info["room_id"]))
+        conn.commit()
+    except: 
+        conn.rollback()
+    finally:
+        conn.close()    
+    
+    return reserve_info
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/api/films', methods=['GET'])
 def api_get_films():
-    return jsonify(get_films())                                 #ritorno l'output della funzione get_film() in JSON per l'invio dei dati
+    return jsonify(get_films())                                 #ritorno l'output della funzione get_film() in JSON per l'invio dei dati con la HTTP response
 
 @app.route('/api/schedule/<film_name>', methods=['GET'])        #route a cui il client fa richiesta con metodo GET per vedere la schedule di un film specifico
 def api_get_film_schedule(film_name):
-    return jsonify(get_film_schedule(film_name))                #ritorno l'output della funzione get_film_schedule() in JSON per l'invio dei dati
+    return jsonify(get_film_schedule(film_name))                
 
-@app.route('/api/films/<film_name>', methods=['GET'])           #route a cui il client fa richiesta con metodo GET per vedere sia le info sul film che la programmazione
+@app.route('/api/films/<film_name>', methods=['GET'])           #route a cui il client fa richiesta con metodo GET per vedere le informazioni su un film specifico
 def api_get_film(film_name):
-    film_info = []
+    return jsonify(get_film(film_name))                                   
 
-    film_info.append(get_film(film_name))
-    film_info.append(get_film_schedule(film_name))
-    return jsonify(film_info)                                   #in una lista inserisco l'output delle funzioni get_film() e get_film_schedule() e ritorno il JSON della lista
-    
+@app.route('/api/reserve', methods=['PUT'])                     #route a cui il client fa richiesta con metodo PUT per prenotare il numero di posti che ha scelto
+def api_reserve():
+    reserve_info = request.get_json()                           #prendo il body della richiesta
+    return jsonify(reserve(reserve_info))                         
+
 
 if __name__ == "__main__":
     app.debug = True
     app.run(debug=True)
-    #app.run()
+

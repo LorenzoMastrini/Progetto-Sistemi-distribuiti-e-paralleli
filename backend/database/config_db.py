@@ -32,7 +32,8 @@ def init_db_table():                            #funzione per inizializzare il D
             CREATE TABLE schedule (
                 time TEXT NOT NULL,
                 room_id INTEGER NOT NULL REFERENCES room(id),
-                film VARCHAR(255) REFERENCES film(name),
+                film VARCHAR(255) REFERENCES film(name), 
+                seats_available INTEGER,
                     
                 PRIMARY KEY (time, room_id)
             );
@@ -50,15 +51,16 @@ init_db_table()
 
 conn = connect_to_db()
 conn.executescript('''
-                   INSERT INTO room VALUES (1, 100);
-                   
-                   INSERT INTO film VALUES ("Interstellar", 140, "cuofdjsfnrsuifksb", "Christopher Nolan");
-                   INSERT INTO film VALUES ("Pulp Fiction", 125, "fdafeawr", "Quentin Tarantino");
-                   INSERT INTO film VALUES ("The VVitch", 120, "aiutoooooooo", "Robert Eggers");
+    INSERT INTO room VALUES (1, 100);
 
-                   INSERT INTO schedule VALUES (datetime("2023-12-02 21:00"), 1, "The VVitch");
-                   INSERT INTO schedule VALUES (datetime("2023-12-02 23:00"), 1, "The VVitch");
-                   INSERT INTO schedule VALUES (datetime("2023-12-03 16:00"), 1, "Interstellar");
-                   INSERT INTO schedule VALUES (datetime("2023-12-03 19:00"), 1, "Pulp Fiction");
-                   INSERT INTO schedule VALUES (datetime("2023-12-04 18:00"), 1, "Pulp Fiction");
+    INSERT INTO film VALUES ("Interstellar", 140, "cuofdjsfnrsuifksb", "Christopher Nolan");
+    INSERT INTO film VALUES ("Pulp Fiction", 125, "fdafeawr", "Quentin Tarantino");
+    INSERT INTO film VALUES ("The VVitch", 120, "aiutoooooooo", "Robert Eggers");
+
+    INSERT INTO schedule VALUES (datetime("2023-12-02 21:00"), 1, "The VVitch", NULL);                  
+    INSERT INTO schedule VALUES (datetime("2023-12-02 23:00"), 1, "The VVitch", NULL);
+    INSERT INTO schedule VALUES (datetime("2023-12-03 16:00"), 1, "Interstellar", NULL);
+    INSERT INTO schedule VALUES (datetime("2023-12-03 19:00"), 1, "Pulp Fiction", NULL);
+    INSERT INTO schedule VALUES (datetime("2023-12-04 18:00"), 1, "Pulp Fiction", NULL);
+    UPDATE schedule SET seats_available = (SELECT room.n_seats FROM room INNER JOIN schedule ON room.id = schedule.room_id)
 ''')
