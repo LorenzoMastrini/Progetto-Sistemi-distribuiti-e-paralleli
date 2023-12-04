@@ -19,7 +19,7 @@ export class FilmPageComponent {
     activatedRoute.params.subscribe((params) => {
       if(params.name) {
         filmService.getFilmByName(params.name).subscribe(serverFilm => {
-          this.film = serverFilm[0];
+          this.film = serverFilm;
           
           console.log(this.film);
 

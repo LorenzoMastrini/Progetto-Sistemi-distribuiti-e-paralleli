@@ -1,9 +1,9 @@
-<app-not-found [visible]="!film.name"
+<app-not-found [visible]="!film"
                 notFoundMessage="Film non trovato!"
                 resetLinkText="Torna alla Homepage">
 </app-not-found>
 
-<div *ngIf="film.name" class="container">
+<div *ngIf="film" class="container">
     <img [src]="film.imageUrl" [alt]="film.name"/>
 
     <div class="info">
