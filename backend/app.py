@@ -86,7 +86,7 @@ def reserve(reserve_info):                          #funzione per la prenotazion
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-@app.route('/api/films', methods=['GET'])                       #route a cui il client fa richiesta con metodo GET per vedere la lista di tutti i film
+@app.route('/api/films', methods=['GET'])
 def api_get_films():
     return jsonify(get_films())                                 #ritorno l'output della funzione get_film() in JSON per l'invio dei dati con la HTTP response
 

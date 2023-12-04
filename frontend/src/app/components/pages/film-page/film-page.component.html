@@ -1,0 +1,68 @@
+<app-not-found [visible]="!film.name"
+                notFoundMessage="Film non trovato!"
+                resetLinkText="Torna alla Homepage">
+</app-not-found>
+
+<div *ngIf="film.name" class="container">
+    <img [src]="film.imageUrl" [alt]="film.name"/>
+
+    <div class="info">
+        <div class="header">
+            <span class="name">
+                {{ film.name }}
+            </span>
+        </div>
+
+        <span class="duration">
+            {{ film.duration }} min
+        </span>
+        <div class="genres">
+            <p *ngFor="let genre of film.genres">
+                {{ genre }}
+            </p>
+        </div>
+        <span>
+            {{ film.description }}
+        </span>
+        <div class="director">
+            <span>
+                <strong>Regista: </strong>{{ film.director }}
+            </span>
+        </div>
+
+        <div class="origins">
+            <span *ngFor="let origin of film.origins">
+                <strong>Paese di produzione: </strong> {{ origin }}
+            </span>
+        </div>
+        
+        <div class="price">
+            <span>
+                {{ film.price | currency }}
+            </span>
+        </div>
+    </div>
+
+    <div class="booking">
+        <div class="schedule" *ngFor="let time of schedule">
+            {{ time.time }}
+        </div>
+
+        <div class="select">
+            <select #quantitySelect (change)="changeRentDays(film, quantitySelect.value)">
+                <!--Film noleggiabili per una settimana al massimo-->
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="footer">
+        <button (click)="bookTickets()">Prenota</button>
+    </div>
+</div>
