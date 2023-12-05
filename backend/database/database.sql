@@ -22,3 +22,11 @@ CREATE TABLE schedule (
                     
     PRIMARY KEY (time, room_id)
 );
+
+CREATE TABLE users (
+    user_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    password TEXT NOT NULL,
+    isAdmin BOOL NOT NULL DEFAULT false
+);
