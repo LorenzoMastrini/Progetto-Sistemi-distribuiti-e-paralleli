@@ -10,4 +10,7 @@ INSERT INTO schedule VALUES (datetime("2023-12-03 16:00"), 1, "Interstellar", NU
 INSERT INTO schedule VALUES (datetime("2023-12-03 19:00"), 1, "Pulp Fiction", NULL);
 INSERT INTO schedule VALUES (datetime("2023-12-04 18:00"), 1, "Pulp Fiction", NULL);
 
+INSERT INTO users VALUES ("Jesus", "iosonogesu@gmail.com", "culo1", true);
+INSERT INTO users VALUES ("Even Flow", "even.flow@gmail.com", "culo2", false);
+
 UPDATE schedule SET seats_available = (SELECT room.n_seats FROM room INNER JOIN schedule ON room.id = schedule.room_id)
