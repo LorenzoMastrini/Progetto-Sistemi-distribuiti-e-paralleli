@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Film } from '../shared/models/Film';
 import { HttpClient } from '@angular/common/http';
-import { FILMS_BY_ID_URL, FILMS_URL, SCHEDULE_FILM_URL } from '../shared/constants/urls';
+import { FILMS_BY_NAME_URL, FILMS_URL, SCHEDULE_FILM_URL } from '../shared/constants/urls';
 import { Observable } from 'rxjs';
 import { Schedule } from '../shared/models/Schedule';
 
@@ -18,8 +18,8 @@ export class FilmService {
     return this.http.get<Film[]>(FILMS_URL);
   }
 
-  getFilmByName(filmName: string): Observable<any> {
-    return this.http.get<any>(FILMS_BY_ID_URL + filmName);
+  getFilmByName(filmName: string): Observable<Film> {
+    return this.http.get<Film>(FILMS_BY_NAME_URL + filmName);
   }
 
   getFilmSchedule(filmName: string): Observable<Schedule[]> {

@@ -13,7 +13,7 @@ import { Film } from 'src/app/shared/models/Film';
 export class HomeComponent {
   films: Film[] = []; //mantiene i dati che otteniamo da FilmService
 
-  constructor(private filmService: FilmService, activatedRoute: ActivatedRoute) {
+  constructor(filmService: FilmService, activatedRoute: ActivatedRoute) {
     let filmsObservable: Observable<Film[]>; //per ottere gli observable di tutti i metodi chiamati che si connettono al backend, poi facendo subscribe per ottere i film
     //altrimenti dovrei fare subscribe per ognuno dei metodi chiamati separatamente
     

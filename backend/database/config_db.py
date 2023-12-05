@@ -2,6 +2,7 @@ import sqlite3
 
 def connect_to_db():                            #funzione per connettersi
     conn = sqlite3.connect('./database.db')
+<<<<<<< HEAD
     return conn
 
 def init_db_table():                            #funzione per inizializzare il DB creando le tabelle necessarie
@@ -75,3 +76,6 @@ conn.executescript('''
     INSERT INTO schedule VALUES (datetime("2023-12-04 18:00"), 1, "Pulp Fiction", NULL);
     UPDATE schedule SET seats_available = (SELECT room.n_seats FROM room INNER JOIN schedule ON room.id = schedule.room_id)
 ''')
+=======
+    return conn
+>>>>>>> a9ae8746566e2096352deaccf4bf71e3469ce2f5
