@@ -28,9 +28,9 @@ export class UserService {
     return this.http.post<User>(USER_LOGIN_URL, userLogin).pipe(tap({
         next: (user) => { //risultato positivo
           this.setUserToLocalStorage(user); //salva l'utente dopo il login avvenuto con successo
-          this.userSubject.next(user);
+          this.userSubject.next(user); //aggiorna lo userSubject con il nuovo utente
           this.toastrService.success(
-            `Benvenuto/a in Kinetoscope ${user.name}!`,
+            `Benvenuto/a al cinema ${user.name}!`,
             'Login completato'
           )
         },
