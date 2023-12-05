@@ -11,6 +11,7 @@ def init_db_table():                            #funzione per inizializzare il D
         conn.execute('DROP TABLE IF EXISTS film;')
         conn.execute('DROP TABLE IF EXISTS room;')
         conn.execute('DROP TABLE IF EXISTS schedule;')
+        conn.execute('DROP TABLE IF EXISTS users;')
         
         conn.execute('''
             CREATE TABLE film (
@@ -32,10 +33,20 @@ def init_db_table():                            #funzione per inizializzare il D
             CREATE TABLE schedule (
                 time TEXT NOT NULL,
                 room_id INTEGER NOT NULL REFERENCES room(id),
-                film VARCHAR(255) REFERENCES film(name), 
+                film TEXT REFERENCES film(name), 
                 seats_available INTEGER,
                     
                 PRIMARY KEY (time, room_id)
+            );
+        ''')
+
+        conn.execute('''
+            CREATE TABLE users (
+                user_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                name TEXT NOT NULL,
+                email TEXT NOT NULL,
+                password TEXT NOT NULL,
+                isAdmin BOOL NOT NULL DEFAULT false      
             );
         ''')
 
