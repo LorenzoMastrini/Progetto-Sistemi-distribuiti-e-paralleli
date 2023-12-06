@@ -1,7 +1,7 @@
 import sqlite3
 
 
-DB_DIR_ABSOLUTE_PATH = 'C:/Users/lollo/Desktop/Informatics/Programming/Sistemi distribuiti e paralleli/Progetto Sistemi distribuiti e paralleli/backend/database/'
+DB_DIR_ABSOLUTE_PATH = 'C:/Users/rcano/Documents/Uni/SDEP/Progetto-Sistemi-distribuiti-e-paralleli/backend/database/'
 
 connection = sqlite3.connect('database.db')
 

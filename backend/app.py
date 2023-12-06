@@ -1,8 +1,9 @@
 import sqlite3
 from database.config_db import connect_to_db
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, session
 from flask_cors import CORS
 import hashlib
+import os
 
 def get_films():                                            #funzione che interroga il DB e restituisce la lista di tutti i film in un dictionary
     films = []
@@ -164,6 +165,8 @@ def delete_users(user_id):                         #funzione per eliminare un ut
 def login(login_info):                              #funzione per verificare l'esito del login dell'utente
     message = {}
     try:
+        session.pop("user", None)
+
         conn = connect_to_db()
         conn.row_factory = sqlite3.Row
         password_hash = hashlib.sha256(login_info["password"].encode('utf-8')).hexdigest()
@@ -174,13 +177,23 @@ def login(login_info):                              #funzione per verificare l'e
 
         if (row["email"] == login_info["email"]) and (row["password"] == password_hash):
             message["status"] = "Login successfull"
+            session["user"] = login_info["email"]
     except:
         message["status"] = "Login failed"
     
-    return message
+    return session["user"]
 
+def logout():
+    message = {}
+
+    session.pop("user", None)
+    message["status"] = "Logout"
+
+    return session
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
+
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/api/films', methods=['GET'])
@@ -199,7 +212,7 @@ def api_get_film(film_name):
 def api_reserve():
     reserve_info = request.get_json()                           #prendo il body della richiesta
     return jsonify(reserve(reserve_info))
-
+        
 @app.route('/api/users/registration', methods=['POST'])         #route a cui il client fa richiesta per registrare un utente
 def api_registration():
     registration_info = request.get_json()
@@ -222,6 +235,10 @@ def api_login():
     login_info = request.get_json()
     return jsonify(login(login_info))
 
+@app.route('/api/users/logout', methods=['GET'])                #route a cui il client fa richiesta per fare il login
+def api_logout():
+    #session.pop("user", None)
+    return jsonify(logout())
 
 if __name__ == "__main__":
     app.debug = True
