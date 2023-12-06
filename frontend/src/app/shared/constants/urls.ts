@@ -6,4 +6,4 @@ export const FILMS_BY_NAME_URL = FILMS_URL + '/'; //url per ottenere i film in b
 
 export const SCHEDULE_FILM_URL = BASE_URL + '/api/schedule/'; //url per ottenere i film in base all'id ('/' alla fine sarà seguito dall'id)
 
-export const USER_LOGIN_URL = BASE_URL + '/api/users/login'; //url per la pagina di login
+export const USER_LOGIN_URL = BASE_URL + '/api/users/login'; //url per l'api del login

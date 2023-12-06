@@ -9,7 +9,6 @@ import { User } from 'src/app/shared/models/User';
 })
 
 export class HeaderComponent {
-  cartQuantity = 0;
   user!: User;
 
   constructor(private userService:UserService) {
