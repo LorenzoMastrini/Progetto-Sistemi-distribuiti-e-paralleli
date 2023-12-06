@@ -23,7 +23,6 @@ export class HomeComponent {
 
       filmsObservable.subscribe((serverFilms) => {
         this.films = serverFilms;
-        console.log(serverFilms);
       });
     });
   }

@@ -164,6 +164,7 @@ def delete_users(user_id):                         #funzione per eliminare un ut
 
 def login(login_info):                              #funzione per verificare l'esito del login dell'utente
     message = {}
+    user = {}
     try:
         session.pop("user", None)
 
@@ -172,16 +173,20 @@ def login(login_info):                              #funzione per verificare l'e
         password_hash = hashlib.sha256(login_info["password"].encode('utf-8')).hexdigest()
         
         cur = conn.cursor()
-        cur.execute("SELECT email, password FROM users WHERE email = ? AND password = ?", (login_info["email"], password_hash))     
+        cur.execute("SELECT email, password, name FROM users WHERE email = ? AND password = ?", (login_info["email"], password_hash))     
         row = cur.fetchone()
 
         if (row["email"] == login_info["email"]) and (row["password"] == password_hash):
             message["status"] = "Login successfull"
-            session["user"] = login_info["email"]
+            user["name"] = row["name"]
+            user["email"] = row["email"]
+            user["password"] = row["password"]
+            session["user"] = row["name"]
+            user["token"] = session["user"]
     except:
         message["status"] = "Login failed"
     
-    return session["user"]
+    return user
 
 def logout():
     message = {}
