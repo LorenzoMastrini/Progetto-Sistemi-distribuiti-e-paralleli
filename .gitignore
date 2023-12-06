@@ -1,3 +1,5 @@
-/backend/.venv/
+backend/.venv
+frontend
 
-/database.db
+
+database.db
