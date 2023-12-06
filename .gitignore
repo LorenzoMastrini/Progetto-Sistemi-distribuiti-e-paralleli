@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 backend/.venv
 frontend
 
 
+=======
+/backend/.venv/
+
+/database.db
+>>>>>>> d46c5bea2e1d155e90c95f47ffe28350c1ebf738
