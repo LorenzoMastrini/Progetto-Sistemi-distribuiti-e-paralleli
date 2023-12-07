@@ -1,4 +1,10 @@
 backend/.venv
 frontend
+<<<<<<< HEAD
 
 
+database.db
+=======
+
+
+>>>>>>> b8dd9858675ff33daa3c24e33c1438bf9e25b34c

@@ -21,12 +21,8 @@ export class FilmPageComponent {
         filmService.getFilmByName(params.name).subscribe(serverFilm => {
           this.film = serverFilm;
           
-          console.log(this.film);
-
           filmService.getFilmSchedule(params.name).subscribe(serverFilmSchedule => {
             this.schedule = serverFilmSchedule;
-            
-            console.log(this.schedule);
           });
         });
       }
