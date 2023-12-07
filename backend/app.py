@@ -183,10 +183,11 @@ def login(login_info):                              #funzione per verificare l'e
             user["password"] = row["password"]
             session["user"] = row["name"]
             user["token"] = session["user"]
+
+        return user
     except:
         message["status"] = "Login failed"
-    
-    return user
+        return message
 
 def logout():
     message = {}
