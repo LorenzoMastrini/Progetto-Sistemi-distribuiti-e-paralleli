@@ -89,6 +89,7 @@ def registration(registration_info):                #funzione per la registrazio
     try:
         conn = connect_to_db()
         cur = conn.cursor()
+
         password_hash = hashlib.sha256(registration_info["password"].encode('utf-8')).hexdigest()
         cur.execute("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", (registration_info["name"], registration_info["email"], password_hash))
         conn.commit()
@@ -178,12 +179,14 @@ def login(login_info):                              #funzione per verificare l'e
         if (row["email"] == login_info["email"]) and (row["password"] == password_hash):
             message["status"] = "Login successfull"
             session["user"] = login_info["email"]
+
+            return message
     except:
         message["status"] = "Login failed"
-    
-    return session["user"]
+        
+        return message
 
-def logout():
+def logout():                                          #funzione per logout: rimuovo l'utente dalla sessione
     message = {}
 
     session.pop("user", None)
@@ -235,9 +238,8 @@ def api_login():
     login_info = request.get_json()
     return jsonify(login(login_info))
 
-@app.route('/api/users/logout', methods=['GET'])                #route a cui il client fa richiesta per fare il login
+@app.route('/api/users/logout', methods=['GET'])                #route a cui il client fa richiesta per fare il logout
 def api_logout():
-    #session.pop("user", None)
     return jsonify(logout())
 
 if __name__ == "__main__":
