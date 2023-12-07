@@ -1,4 +1,6 @@
 import sqlite3
+
+import werkzeug
 from database.config_db import connect_to_db
 from flask import Flask, jsonify, request, session
 from flask_cors import CORS
@@ -86,21 +88,30 @@ def reserve(reserve_info):                          #funzione per la prenotazion
 
 def registration(registration_info):                #funzione per la registrazione di un utente
     inserted_user = {}
+    row = [] 
     try:
         conn = connect_to_db()
+        conn.row_factory = sqlite3.Row
         cur = conn.cursor()
+        
+        cur.execute("SELECT * FROM users WHERE email = ?", (registration_info["email"],))
+        row = cur.fetchone()
 
+        if row is not None:
+            return 400
+            
         password_hash = hashlib.sha256(registration_info["password"].encode('utf-8')).hexdigest()
         cur.execute("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", (registration_info["name"], registration_info["email"], password_hash))
         conn.commit()
         
-        inserted_user = get_user_by_id(cur.lastrowid)   
-    except: 
+        inserted_user = get_user_by_id(cur.lastrowid)
+        return inserted_user 
+    except:     
         conn.rollback()
     finally:
-        conn.close() 
+        conn.close()
+   
 
-    return inserted_user
 
 def get_users():                                    #funzione per vedere tutti gli utenti nel DB                                  
     users = []
@@ -164,7 +175,6 @@ def delete_users(user_id):                         #funzione per eliminare un ut
     return message
 
 def login(login_info):                              #funzione per verificare l'esito del login dell'utente
-    message = {}
     user = {}
     try:
         session.pop("user", None)
@@ -177,21 +187,18 @@ def login(login_info):                              #funzione per verificare l'e
         cur.execute("SELECT email, password, name FROM users WHERE email = ? AND password = ?", (login_info["email"], password_hash))     
         row = cur.fetchone()
 
-        if (row["email"] == login_info["email"]) and (row["password"] == password_hash):
-            message["status"] = "Login successfull"
+        if (row["email"] == login_info["email"]) and (row["password"] == password_hash):           
             user["name"] = row["name"]
             user["email"] = row["email"]
             user["password"] = row["password"]
             session["user"] = row["name"]
             user["token"] = session["user"]
 
-        return user
+            return user
     except:
-        message["status"] = "Login failed"
-    
-    return session["user"]
+        return 400
 
-def logout():                                          #funzione per logout: rimuovo l'utente dalla sessione
+def logout():                                                  #funzione per logout: rimuovo l'utente dalla sessione
     message = {}
 
     session.pop("user", None)
@@ -203,6 +210,10 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 CORS(app, resources={r"/*": {"origins": "*"}})
+
+@app.errorhandler(werkzeug.exceptions.BadRequest)
+def handle_bad_request(e):
+    return e, 400
 
 @app.route('/api/films', methods=['GET'])
 def api_get_films():
@@ -224,7 +235,11 @@ def api_reserve():
 @app.route('/api/users/registration', methods=['POST'])         #route a cui il client fa richiesta per registrare un utente
 def api_registration():
     registration_info = request.get_json()
-    return jsonify(registration(registration_info))
+    result = registration(registration_info)
+    if result == 400:
+        return handle_bad_request("Email già esistente")
+    else:
+        return jsonify(result)
 
 @app.route('/api/users/<user_id>', methods=['GET'])             #route a cui il client fa richiesta per vedere un utente specifico
 def api_get_user(user_id):
@@ -241,7 +256,11 @@ def api_delete_users(user_id):
 @app.route('/api/users/login', methods=['POST'])                #route a cui il client fa richiesta per fare il login
 def api_login():
     login_info = request.get_json()
-    return jsonify(login(login_info))
+    result = login(login_info)
+    if result == 400:
+        return handle_bad_request("Email o password errati")
+    else:    
+        return jsonify(result)
 
 @app.route('/api/users/logout', methods=['GET'])                #route a cui il client fa richiesta per fare il logout
 def api_logout():
