@@ -32,7 +32,7 @@ export class UserService {
           this.toastrService.success(
             `Benvenuto/a al cinema ${user.name}!`,
             'Login completato'
-          )
+          );
         },
         error: (errorResponse) => { //errore
           this.toastrService.error(errorResponse.error, 'Login fallito');
