@@ -3,8 +3,9 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { User } from '../shared/models/User';
 import { IUserLogin } from '../shared/interfaces/IUserLogin';
 import { HttpClient } from '@angular/common/http';
-import { USER_LOGIN_URL } from '../shared/constants/urls';
+import { USER_LOGIN_URL, USER_REGISTER_URL } from '../shared/constants/urls';
 import { ToastrService } from 'ngx-toastr';
+import { IUserRegister } from '../shared/interfaces/IUserRegister';
 
 
 const USER_KEY = 'User'; //chiave per modificare l'utente salvato nel localStorage
@@ -32,13 +33,29 @@ export class UserService {
           this.toastrService.success(
             `Benvenuto/a al cinema ${user.name}!`,
             'Login completato'
-          )
+          );
         },
         error: (errorResponse) => { //errore
           this.toastrService.error(errorResponse.error, 'Login fallito');
         }
       })
     );
+  }
+
+  register(userRegister:IUserRegister): Observable<User> {
+    return this.http.post<User>(USER_REGISTER_URL, userRegister).pipe(tap({
+      next: (user) => {
+        this.setUserToLocalStorage(user);
+        this.userSubject.next(user);
+        this.toastrService.success(
+          `Benvenuto/a al cinema ${user.name}!`,
+          'Registrazione completata'
+        )
+      },
+      error: (errorResponse) => {
+        this.toastrService.error(errorResponse.error, 'Registrazione fallita');
+      }
+    }));
   }
 
   logout() {

@@ -18,6 +18,13 @@
             </text-input>
 
             <default-button text="Login"></default-button>
+
+            <div class="register">
+                Nuovo utente? &nbsp;
+                <a routerLink="/register" [queryParams]="{returnUrl: returnUrl}">
+                    Registrazione
+                </a>
+            </div>
         </form>
     </div>
 </div>
