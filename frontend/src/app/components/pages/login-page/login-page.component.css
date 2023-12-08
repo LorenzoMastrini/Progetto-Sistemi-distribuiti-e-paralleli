@@ -10,9 +10,14 @@
     width: 28rem;
 }
 
-
 form {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
