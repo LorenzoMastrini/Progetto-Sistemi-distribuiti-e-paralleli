@@ -1,6 +1,6 @@
 import sqlite3
 import hashlib
-from database.config_db import connect_to_db
+from database.init_db import connect_to_db
 from flask import jsonify, request, session
 from app import handle_bad_request
 from __main__ import app
