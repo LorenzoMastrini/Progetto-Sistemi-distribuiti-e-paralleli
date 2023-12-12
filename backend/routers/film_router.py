@@ -1,13 +1,7 @@
 import sqlite3
 from __main__ import app
-<<<<<<< HEAD
-from database.init_db import connect_to_db
-from flask import jsonify, request
-
-=======
 from flask import jsonify, request
 from database.init_db import connect_to_db
->>>>>>> 15fc42bbe8f8596d5bf60a1335b74ea81f6a7a9a
 
 def get_films():                                            #funzione che interroga il DB e restituisce la lista di tutti i film in un dictionary
     films = []

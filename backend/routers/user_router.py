@@ -1,9 +1,6 @@
 import sqlite3
 import hashlib
-<<<<<<< HEAD
 from __main__ import app
-=======
->>>>>>> 15fc42bbe8f8596d5bf60a1335b74ea81f6a7a9a
 from database.init_db import connect_to_db
 from flask import jsonify, request, session
 from app import handle_bad_request
