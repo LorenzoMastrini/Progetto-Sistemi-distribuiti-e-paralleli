@@ -5,6 +5,7 @@ import os
 
 app = Flask(__name__)
 
+import routers.admin_router
 import routers.film_router
 import routers.user_router
 
