@@ -1,8 +1,13 @@
 import sqlite3
 from __main__ import app
+<<<<<<< HEAD
 from database.init_db import connect_to_db
 from flask import jsonify, request
 
+=======
+from flask import jsonify, request
+from database.init_db import connect_to_db
+>>>>>>> 15fc42bbe8f8596d5bf60a1335b74ea81f6a7a9a
 
 def get_films():                                            #funzione che interroga il DB e restituisce la lista di tutti i film in un dictionary
     films = []
@@ -38,10 +43,10 @@ def get_film_schedule(film_name):                          #funzione per che int
 
         for i in rows:
             schedule_dic = {}
-            schedule_dic["time"] = i["time"]
-            schedule_dic["room_id"] = i["room_id"]
+            schedule_dic["movieTime"] = i["movie_time"]
+            schedule_dic["roomId"] = i["room_id"]
             schedule_dic["film"] = i["film"]
-            schedule_dic["seats_avilable"] = i["seats_available"]
+            schedule_dic["seatsAvailable"] = i["seats_available"]
 
             schedule.append(schedule_dic)
     except: 

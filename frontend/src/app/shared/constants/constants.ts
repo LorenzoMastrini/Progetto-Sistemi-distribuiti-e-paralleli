@@ -1,0 +1,1 @@
+export const FILMS_PRICE_PER_TICKET: number = 4.90;

@@ -106,3 +106,7 @@ button:hover{
 .favorite.not{
     color: grey;
 }
+
+label {
+    color: white;
+}
