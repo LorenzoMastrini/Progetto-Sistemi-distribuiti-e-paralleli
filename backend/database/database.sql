@@ -16,12 +16,12 @@ CREATE TABLE room (
 );
 
 CREATE TABLE schedule (
-    time TEXT NOT NULL,
+    movie_time TEXT NOT NULL,
     room_id INTEGER NOT NULL REFERENCES room(id),
     film VARCHAR(255) REFERENCES film(name), 
     seats_available INTEGER,
                     
-    PRIMARY KEY (time, room_id)
+    PRIMARY KEY (movie_time, room_id)
 );
 
 CREATE TABLE users (
@@ -29,5 +29,5 @@ CREATE TABLE users (
     name TEXT NOT NULL,
     email TEXT NOT NULL,
     password TEXT NOT NULL,
-    isAdmin BOOL NOT NULL DEFAULT false
+    is_admin BOOL NOT NULL DEFAULT false
 );

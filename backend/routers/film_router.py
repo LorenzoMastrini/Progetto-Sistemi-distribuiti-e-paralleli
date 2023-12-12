@@ -37,10 +37,10 @@ def get_film_schedule(film_name):                          #funzione per che int
 
         for i in rows:
             schedule_dic = {}
-            schedule_dic["time"] = i["time"]
-            schedule_dic["room_id"] = i["room_id"]
+            schedule_dic["movieTime"] = i["movie_time"]
+            schedule_dic["roomId"] = i["room_id"]
             schedule_dic["film"] = i["film"]
-            schedule_dic["seats_avilable"] = i["seats_available"]
+            schedule_dic["seatsAvailable"] = i["seats_available"]
 
             schedule.append(schedule_dic)
     except: 

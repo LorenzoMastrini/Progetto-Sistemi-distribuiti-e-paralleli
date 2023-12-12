@@ -1,5 +1,6 @@
 export class Schedule {
-    time!: string;
+    movieTime!: string;
     roomId!: number;
-    film!: string
+    film!: string;
+    seatsAvailable!: number;
 }
