@@ -1,4 +1,3 @@
 backend/.venv
 frontend
-database.db
-database/init_db.py
+
