@@ -1,10 +1,12 @@
 import sqlite3
 import hashlib
+<<<<<<< HEAD
+from __main__ import app
+=======
+>>>>>>> 15fc42bbe8f8596d5bf60a1335b74ea81f6a7a9a
 from database.init_db import connect_to_db
 from flask import jsonify, request, session
 from app import handle_bad_request
-from __main__ import app
-
 
 def registration(registration_info):                #funzione per la registrazione di un utente
     inserted_user = {}
@@ -23,7 +25,7 @@ def registration(registration_info):                #funzione per la registrazio
         password_hash = hashlib.sha256(registration_info["password"].encode('utf-8')).hexdigest()
         cur.execute("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", (registration_info["name"], registration_info["email"], password_hash))
         conn.commit()
-        
+ 
         inserted_user = get_user_by_id(cur.lastrowid)
         return inserted_user 
     except:     
@@ -74,7 +76,6 @@ def get_user_by_id(user_id):                        #funzione per vedere un uten
     
     return user
 
-
 def delete_users(user_id):                         #funzione per eliminare un utente nel DB                        
     message = {}
     try:
@@ -111,6 +112,7 @@ def login(login_info):                              #funzione per verificare l'e
             user["password"] = row["password"]
             session["user"] = row["name"]
             user["token"] = session["user"]
+            user["isAdmin"] = row["isAdmin"]
 
             return user
     except:
@@ -132,18 +134,6 @@ def api_registration():
         return handle_bad_request("Email già esistente")
     else:
         return jsonify(result)
-
-@app.route('/api/users/<user_id>', methods=['GET'])                     #route a cui il client fa richiesta per vedere un utente specifico
-def api_get_user(user_id):
-    return jsonify(get_user_by_id(user_id))
-
-@app.route('/api/users', methods=['GET'])                               #route a cui il client fa richiesta per vedere tutti gli utenti
-def api_get_users():
-    return jsonify(get_users())
-
-@app.route('/api/users/delete/<user_id>', methods=['DELETE'])           #route a cui il client fa richiesta per eliminare un utente
-def api_delete_users(user_id):
-    return jsonify(delete_users(user_id))
 
 @app.route('/api/users/login', methods=['POST'])                        #route a cui il client fa richiesta per fare il login
 def api_login():

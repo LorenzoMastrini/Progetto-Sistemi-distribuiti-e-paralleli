@@ -1,4 +1,2 @@
 backend/.venv
-backend
-
-backend/database/database.db
+backend/database/init_db.py
