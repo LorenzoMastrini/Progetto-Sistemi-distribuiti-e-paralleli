@@ -71,6 +71,12 @@ export class FilmPageComponent implements OnInit {
   }
 
   bookTickets(nTickets: string) {
+    if(this.userService.currentUser.id == undefined) {
+      this.router.navigateByUrl('/login');
+      return; //serve essere autenticati per prenotare i posti
+    }
+
+    //arrivo qua solo se l'utente ha effettuato il login
     const bookingInfo = new BookingInfo();
     bookingInfo["filmName"] = this.film.name;
     bookingInfo["movieTime"] = this.schedules[this.scheduleIndex].movieTime;
@@ -78,10 +84,9 @@ export class FilmPageComponent implements OnInit {
     bookingInfo["nSeats"] = parseInt(nTickets);
     bookingInfo["userId"] = parseInt(this.userService.currentUser.id);
 
-    console.log(bookingInfo);
     this.filmService.reserve(bookingInfo).subscribe(() => {
-      //torna all'url precedente se il login avviene con successo  
-      //this.router.navigateByUrl('/orders');
-    });;
+      //redirige l'utente alla pagina degli ordini
+      this.router.navigateByUrl('/user/orders');
+    });
   }
 }
