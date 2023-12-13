@@ -39,12 +39,13 @@ def login(login_info):                              #funzione per verificare l'e
         conn = connect_to_db()
         conn.row_factory = sqlite3.Row
         password_hash = hashlib.sha256(login_info["password"].encode('utf-8')).hexdigest()
-        
+
         cur = conn.cursor()
         cur.execute("SELECT email, password, name, is_admin FROM users WHERE email = ? AND password = ?", (login_info["email"], password_hash))     
         row = cur.fetchone()
 
         if (row["email"] == login_info["email"]) and (row["password"] == password_hash):           
+            user["id"] = row["user_id"]
             user["name"] = row["name"]
             user["email"] = row["email"]
             user["password"] = row["password"]

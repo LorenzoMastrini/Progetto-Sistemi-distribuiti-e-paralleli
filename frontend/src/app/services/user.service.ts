@@ -23,6 +23,10 @@ export class UserService {
     this.userObservable = this.userSubject.asObservable(); //versione read only di userSubject, da esporre fuori dallo UserService
   }
 
+  public get currentUser(): User {
+    return this.userSubject.value; //ultimo valore dello userSubject
+  }
+
   login(userLogin:IUserLogin): Observable<User> {
     //non posso usare subscribe perché il tipo di ritorno sarebbe Subscription, non Observable
     //se non voglio cambiare ilvalore del risulato posso usare pipe(tap())
