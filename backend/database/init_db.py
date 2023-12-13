@@ -16,11 +16,6 @@ with open(DB_DIR_ABSOLUTE_PATH_RICCARDO + 'populate_db.sql') as f:
 connection.commit()
 connection.close()
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 15fc42bbe8f8596d5bf60a1335b74ea81f6a7a9a
 def connect_to_db():                            #funzione per connettersi
     conn = sqlite3.connect('./backend/database/database.db')
     return conn

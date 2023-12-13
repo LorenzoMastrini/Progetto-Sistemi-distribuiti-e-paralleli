@@ -16,11 +16,11 @@ def get_users():                                    #funzione per vedere tutti g
         # convert row objects to dictionary
         for i in rows:
             user = {}
-            user["user_id"] = i["user_id"]
+            user["userId"] = i["user_id"]
             user["name"] = i["name"]
             user["email"] = i["email"]
             user["password"] = i["password"]
-            user["isAdmin"] = i["isAdmin"]
+            user["isAdmin"] = i["is_admin"]
 
             users.append(user)
     except:
@@ -37,11 +37,11 @@ def get_user_by_id(user_id):                        #funzione per vedere un uten
         cur.execute("SELECT * FROM users WHERE user_id = ?", (user_id,))
         row = cur.fetchone()
 
-        user["user_id"] = row["user_id"]
+        user["userId"] = row["user_id"]
         user["name"] = row["name"]
         user["email"] = row["email"]
         user["password"] = row["password"]
-        user["isAdmin"] = row["isAdmin"]
+        user["isAdmin"] = row["is_admin"]
     except: 
         user = {}
     
@@ -102,7 +102,7 @@ def delete_film(film_id):                         #funzione per eliminare un fil
     finally:
         conn.close()
 
-    return message
+    return message  
 
 def add_schedule(schedule_info):                #funzione per aggiungere un nuovo orario al DB
     inserted_schedule = {}
@@ -111,15 +111,15 @@ def add_schedule(schedule_info):                #funzione per aggiungere un nuov
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
 
-        cur.execute("SELECT * FROM schedule WHERE time = ? AND room_id = ?", (schedule_info["time"], schedule_info["room_id"]))
+        cur.execute("SELECT * FROM schedule WHERE movie_time = ? AND room_id = ?", (schedule_info["movieTime"], schedule_info["roomId"]))
         row = cur.fetchone()
 
         if row is not None:
             return 400
         
-        cur.execute("SELECT n_seats FROM room WHERE id = ?", (schedule_info["room_id"],))
+        cur.execute("SELECT n_seats FROM room WHERE id = ?", (schedule_info["roomId"],))
         row = cur.fetchone()
-        cur.execute("INSERT INTO schedule (time, room_id, film, seats_available) VALUES (datetime(?), ?, ?, ?)", (schedule_info["time"], schedule_info["room_id"], schedule_info["film"], row["n_seats"]))
+        cur.execute("INSERT INTO schedule (movie_time, room_id, film, seats_available) VALUES (datetime(?), ?, ?, ?)", (schedule_info["movieTime"], schedule_info["roomId"], schedule_info["film"], row["n_seats"]))
         conn.commit()
         
         return inserted_schedule
@@ -133,7 +133,7 @@ def delete_schedule(time):                         #funzione per eliminare un or
     try:
         conn = connect_to_db()
         cur = conn.cursor()
-        cur.execute("DELETE FROM schedule WHERE time = ?", (time,))
+        cur.execute("DELETE FROM schedule WHERE movie_time = ?", (time,))
         conn.commit()
 
         message["status"] = "Schedule deleted successfully"
