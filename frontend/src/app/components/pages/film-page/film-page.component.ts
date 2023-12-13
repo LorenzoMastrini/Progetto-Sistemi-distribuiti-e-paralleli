@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FilmService } from 'src/app/services/film.service';
+import { UserService } from 'src/app/services/user.service';
 import { FILMS_PRICE_PER_TICKET } from 'src/app/shared/constants/constants';
+import { BookingInfo } from 'src/app/shared/models/BookingInfo';
 import { Film } from 'src/app/shared/models/Film';
 import { Schedule } from 'src/app/shared/models/Schedule';
 
@@ -22,7 +24,11 @@ export class FilmPageComponent implements OnInit {
   maxBookableTickets: number[] = []; //si possono prenotare al massimo 10 biglietti (se almeno 10 posti sono disponibili)
   scheduleIndex!: number; //valore letto dall'html dinamicamente in base all'orario selezionato dall'utente (poi usato per verificare i posti disponibili)
 
-  constructor(activatedRoute:ActivatedRoute, filmService:FilmService, private router:Router, private formBuilder:FormBuilder) {
+  constructor(activatedRoute:ActivatedRoute,
+              private filmService:FilmService,
+              private router:Router,
+              private formBuilder:FormBuilder,
+              private userService:UserService) {
     activatedRoute.params.subscribe((params) => {
       if(params.name) {
         filmService.getFilmByName(params.name).subscribe(serverFilm => {
@@ -64,7 +70,18 @@ export class FilmPageComponent implements OnInit {
     this.totalPrice = FILMS_PRICE_PER_TICKET * nTickets;
   }
 
-  bookTickets() {
-    
+  bookTickets(nTickets: string) {
+    const bookingInfo = new BookingInfo();
+    bookingInfo["filmName"] = this.film.name;
+    bookingInfo["movieTime"] = this.schedules[this.scheduleIndex].movieTime;
+    bookingInfo["roomId"] = this.schedules[this.scheduleIndex].roomId;
+    bookingInfo["nSeats"] = parseInt(nTickets);
+    bookingInfo["userId"] = parseInt(this.userService.currentUser.id);
+
+    console.log(bookingInfo);
+    this.filmService.reserve(bookingInfo).subscribe(() => {
+      //torna all'url precedente se il login avviene con successo  
+      //this.router.navigateByUrl('/orders');
+    });;
   }
 }

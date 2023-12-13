@@ -71,10 +71,10 @@ def reserve(reserve_info):                          #funzione per la prenotazion
         conn = connect_to_db()
         cur = conn.cursor()
 
-        cur.execute("SELECT seats_available FROM schedule WHERE time = ? AND room_id = ?", (reserve_info["time"], reserve_info["room_id"]))
+        cur.execute("SELECT seats_available FROM schedule WHERE movie_time = ? AND room_id = ?", (reserve_info["movieTime"], reserve_info["roomId"]))
         row = cur.fetchone()
 
-        cur.execute("UPDATE schedule SET seats_available = ? WHERE time = ? AND room_id = ?", (row[0] - reserve_info["n_seats"], reserve_info["time"], reserve_info["room_id"]))
+        cur.execute("UPDATE schedule SET seats_available = ? WHERE movie_time = ? AND room_id = ?", (row[0] - reserve_info["nSeats"], reserve_info["movieTime"], reserve_info["roomId"]))
         conn.commit()
     except: 
         conn.rollback()
@@ -96,7 +96,7 @@ def api_get_film_schedule(film_name):
 def api_get_film(film_name):
     return jsonify(get_film(film_name))                                   
 
-@app.route('/api/films/reserve', methods=['PUT'])                       #route a cui il client fa richiesta con metodo PUT per prenotare il numero di posti che ha scelto
+@app.route('/api/films/reserve', methods=['POST'])                       #route a cui il client fa richiesta con metodo PUT per prenotare il numero di posti che ha scelto
 def api_reserve():
     reserve_info = request.get_json()                                   #prendo il body della richiesta
     return jsonify(reserve(reserve_info))
