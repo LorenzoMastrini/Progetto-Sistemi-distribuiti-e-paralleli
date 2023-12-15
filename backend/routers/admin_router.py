@@ -111,29 +111,46 @@ def add_schedule(schedule_info):                #funzione per aggiungere un nuov
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
 
-        cur.execute("SELECT * FROM schedule WHERE movie_time = ? AND room_id = ?", (schedule_info["movieTime"], schedule_info["roomId"]))
+        cur.execute("SELECT * FROM schedule WHERE movie_time = ?", (schedule_info["movieTime"],))
         row = cur.fetchone()
 
         if row is not None:
             return 400
         
-        cur.execute("SELECT n_seats FROM room WHERE id = ?", (schedule_info["roomId"],))
-        row = cur.fetchone()
-        cur.execute("INSERT INTO schedule (movie_time, room_id, film, seats_available) VALUES (datetime(?), ?, ?, ?)", (schedule_info["movieTime"], schedule_info["roomId"], schedule_info["film"], row["n_seats"]))
+        cur.execute("INSERT INTO schedule (movie_time, film) VALUES (datetime(?), ?)", (schedule_info["movieTime"], schedule_info["film"]))
         conn.commit()
         
+        inserted_schedule = get_schedule_by_id(cur.lastrowid)
         return inserted_schedule
     except:
         conn.rollback() 
     finally:
-        conn.close()    
+        conn.close()
+            
+def get_schedule_by_id(schedule_id):                        #funzione per vedere un orario specifico nel DB         
+    schedule = {}
+    try:
+        conn = connect_to_db()
+        conn.row_factory = sqlite3.Row
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM schedule WHERE id = ?", (schedule_id,))
+        row = cur.fetchone()
 
-def delete_schedule(time):                         #funzione per eliminare un orario dal DB                        
+        schedule["scheduleId"] = row["id"]
+        schedule["movieTime"] = row["movie_time"]
+        schedule["film"] = row["film"]
+        schedule["seatsAvailable"] = row["seats_available"]
+    except: 
+        schedule = {}
+    
+    return schedule
+
+def delete_schedule(id):                         #funzione per eliminare un orario dal DB                        
     message = {}
     try:
         conn = connect_to_db()
         cur = conn.cursor()
-        cur.execute("DELETE FROM schedule WHERE movie_time = ?", (time,))
+        cur.execute("DELETE FROM schedule WHERE id = ?", (id,))
         conn.commit()
 
         message["status"] = "Schedule deleted successfully"
@@ -144,6 +161,21 @@ def delete_schedule(time):                         #funzione per eliminare un or
         conn.close()
 
     return message
+
+def update_schedule(update):                    #funzione per aggiornare un orario
+    updated_schedule = {}
+    try:
+        conn = connect_to_db()
+        cur = conn.cursor()
+        cur.execute("UPDATE schedule SET movie_time = ?, film = ? WHERE id = ?", (update["movieTime"], update["film"], update["id"]))
+        conn.commit()
+        updated_schedule = get_schedule_by_id(update["id"])
+    except:
+        conn.rollback() 
+    finally:
+        conn.close()
+
+    return updated_schedule    
 
 @app.errorhandler(werkzeug.exceptions.BadRequest)
 def handle_bad_request(e):
@@ -183,6 +215,12 @@ def api_delete_users(user_id):
 def api_delete_film(film_id):
     return jsonify(delete_film(film_id))
 
-@app.route('/api/admin/films/schedule/delete/<time>', methods=['DELETE'])              #route a cui il client fa richiesta per eliminare un orario
-def api_delete_schedule(time):
-    return jsonify(delete_schedule(time))
+@app.route('/api/admin/films/schedule/delete/<id>', methods=['DELETE'])      #route a cui il client fa richiesta per eliminare un orario
+def api_delete_schedule(id):
+    return jsonify(delete_schedule(id))
+
+@app.route('/api/admin/films/schedule/update', methods=['PUT'])         #route a cui il client fa richiesta per aggiornare un orario
+def api_update_schedule():
+    update = request.get_json()
+    result = update_schedule(update)
+    return jsonify(result)

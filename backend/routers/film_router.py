@@ -38,8 +38,8 @@ def get_film_schedule(film_name):                          #funzione per che int
 
         for i in rows:
             schedule_dic = {}
+            schedule_dic["id"] = i["id"]
             schedule_dic["movieTime"] = i["movie_time"]
-            schedule_dic["roomId"] = i["room_id"]
             schedule_dic["film"] = i["film"]
             schedule_dic["seatsAvailable"] = i["seats_available"]
 
@@ -72,13 +72,13 @@ def reserve(reserve_info):                          #funzione per la prenotazion
         conn = connect_to_db()
         cur = conn.cursor()
 
-        cur.execute("SELECT seats_available FROM schedule WHERE movie_time = ? AND room_id = ?", (reserve_info["movieTime"], reserve_info["roomId"]))
+        cur.execute("SELECT seats_available FROM schedule WHERE movie_time = ?", (reserve_info["movieTime"],))
         row = cur.fetchone()
 
-        cur.execute("UPDATE schedule SET seats_available = ? WHERE movie_time = ? AND room_id = ?", (row[0] - reserve_info["nSeats"], reserve_info["movieTime"], reserve_info["roomId"]))
+        cur.execute("UPDATE schedule SET seats_available = ? WHERE movie_time = ?", (row[0] - reserve_info["nSeats"], reserve_info["movieTime"]))
         cur.execute("INSERT INTO reservation (movie_time, user_id, n_seats) VALUES (?, ?, ?)", (reserve_info["movieTime"], reserve_info["userId"], reserve_info["nSeats"]))
 
-        conn.commit()
+        conn.commit()    
     except: 
         conn.rollback()
     finally:

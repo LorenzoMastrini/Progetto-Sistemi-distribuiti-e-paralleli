@@ -41,7 +41,7 @@ def login(login_info):                              #funzione per verificare l'e
         password_hash = hashlib.sha256(login_info["password"].encode('utf-8')).hexdigest()
 
         cur = conn.cursor()
-        cur.execute("SELECT email, password, name, is_admin FROM users WHERE email = ? AND password = ?", (login_info["email"], password_hash))     
+        cur.execute("SELECT * FROM users WHERE email = ? AND password = ?", (login_info["email"], password_hash))     
         row = cur.fetchone()
 
         if (row["email"] == login_info["email"]) and (row["password"] == password_hash):           

@@ -1,5 +1,4 @@
 DROP TABLE IF EXISTS film;
-DROP TABLE IF EXISTS room;
 DROP TABLE IF EXISTS schedule;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS reservation;
@@ -11,18 +10,11 @@ CREATE TABLE film (
     director VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE room (
-    id INTEGER PRIMARY KEY NOT NULL,
-    n_seats INTEGER NOT NULL
-);
-
 CREATE TABLE schedule (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
     movie_time TEXT NOT NULL,
-    room_id INTEGER NOT NULL REFERENCES room(id),
     film VARCHAR(255) REFERENCES film(name), 
-    seats_available INTEGER,
-                    
-    PRIMARY KEY (movie_time, room_id)
+    seats_available INTEGER DEFAULT 100                
 );
 
 CREATE TABLE users (
