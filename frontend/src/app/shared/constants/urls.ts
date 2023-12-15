@@ -6,5 +6,7 @@ export const FILMS_BY_NAME_URL = FILMS_URL + '/'; //url per ottenere i film in b
 export const SCHEDULE_FILM_URL = FILMS_URL + '/schedule/'; //url per ottenere i film in base all'id ('/' alla fine sarà seguito dall'id)
 export const BOOK_TICKETS_URL = FILMS_URL + '/reserve'; //url per prenotare biglietti per l'orario di un film
 
-export const USER_LOGIN_URL = BASE_URL + '/api/users/login'; //url per l'api del login
-export const USER_REGISTER_URL = BASE_URL + '/api/users/registration'; //url per l'api della registrazione di nuovi utenti
+export const USER_URL = BASE_URL + '/api/users';
+export const USER_LOGIN_URL = USER_URL + '/login'; //url per l'api del login
+export const USER_REGISTER_URL = USER_URL + '/registration'; //url per l'api della registrazione di nuovi utenti
+export const USER_ORDERS_URL = USER_URL + '/orders/'; //url per l'api della registrazione di nuovi utenti

@@ -19,6 +19,7 @@ import { TextInputComponent } from './components/partials/text-input/text-input.
 import { DefaultButtonComponent } from './components/partials/default-button/default-button.component';
 import { RegisterPageComponent } from './components/pages/register-page/register-page.component';
 import { OrdersPageComponent } from './components/pages/orders-page/orders-page.component';
+import { PaymentPageComponent } from './components/pages/payment-page/payment-page.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { OrdersPageComponent } from './components/pages/orders-page/orders-page.
     TextInputComponent,
     DefaultButtonComponent,
     RegisterPageComponent,
-    OrdersPageComponent
+    OrdersPageComponent,
+    PaymentPageComponent
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,7 @@ import { FilmPageComponent } from './components/pages/film-page/film-page.compon
 import { LoginPageComponent } from './components/pages/login-page/login-page.component';
 import { RegisterPageComponent } from './components/pages/register-page/register-page.component';
 import { OrdersPageComponent } from './components/pages/orders-page/orders-page.component';
+import { PaymentPageComponent } from './components/pages/payment-page/payment-page.component';
 
 const routes: Routes = [
   { path:"", component: HomeComponent }, //homepage dell'app
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path:"film/:name", component: FilmPageComponent },
   { path:"login", component: LoginPageComponent },
   { path:"register", component: RegisterPageComponent },
+  { path:"payment", component: PaymentPageComponent },
   { path:"user/orders", component: OrdersPageComponent }
 ];
 
