@@ -45,7 +45,7 @@ export class PaymentPageComponent implements OnInit {
 
     this.orderService.reserve().subscribe(() => {
       //redirige l'utente alla pagina degli ordini
-      //this.router.navigateByUrl('/payment');
+      this.router.navigateByUrl('/');
     });
   }
 }

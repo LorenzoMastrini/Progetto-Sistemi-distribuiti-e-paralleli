@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { USER_LOGIN_URL, USER_REGISTER_URL } from '../shared/constants/urls';
 import { ToastrService } from 'ngx-toastr';
 import { IUserRegister } from '../shared/interfaces/IUserRegister';
+import { Router } from '@angular/router';
 
 
 const USER_KEY = 'User'; //chiave per modificare l'utente salvato nel localStorage
@@ -19,7 +20,7 @@ export class UserService {
   //non voglio che le informazioni dell'utente siano modificabili da altri se non lo UserService, quindi creo l'Observable
   public userObservable: Observable<User>; //voglio esporre i dati dell'utente al di fuori di UserService
 
-  constructor(private http:HttpClient, private toastrService:ToastrService) {
+  constructor(private http:HttpClient, private toastrService:ToastrService, private router:Router) {
     this.userObservable = this.userSubject.asObservable(); //versione read only di userSubject, da esporre fuori dallo UserService
   }
 
@@ -66,6 +67,7 @@ export class UserService {
     this.userSubject.next(new User());
     localStorage.removeItem(USER_KEY);
     window.location.reload(); //refresh della pagina
+    this.router.navigateByUrl('/');
   }
 
   //uso localStorage per salvare l'utente così da non dover rifare il login dopo un refresh della pagina (come cart-page)

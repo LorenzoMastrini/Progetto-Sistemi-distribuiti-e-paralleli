@@ -14,7 +14,7 @@ const routes: Routes = [
   { path:"login", component: LoginPageComponent },
   { path:"register", component: RegisterPageComponent },
   { path:"payment", component: PaymentPageComponent },
-  { path:"user/orders", component: OrdersPageComponent }
+  { path:"users/orders/:userToken", component: OrdersPageComponent }
 ];
 
 @NgModule({
