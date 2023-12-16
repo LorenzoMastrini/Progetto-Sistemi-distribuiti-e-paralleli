@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FilmService } from 'src/app/services/film.service';
+import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
 import { FILMS_PRICE_PER_TICKET } from 'src/app/shared/constants/constants';
-import { BookingInfo } from 'src/app/shared/models/BookingInfo';
 import { Film } from 'src/app/shared/models/Film';
+import { Order } from 'src/app/shared/models/Order';
 import { Schedule } from 'src/app/shared/models/Schedule';
 
 @Component({
@@ -26,6 +27,7 @@ export class FilmPageComponent implements OnInit {
 
   constructor(activatedRoute:ActivatedRoute,
               private filmService:FilmService,
+              private orderService:OrderService,
               private router:Router,
               private formBuilder:FormBuilder,
               private userService:UserService) {
@@ -70,23 +72,19 @@ export class FilmPageComponent implements OnInit {
     this.totalPrice = FILMS_PRICE_PER_TICKET * nTickets;
   }
 
-  bookTickets(nTickets: string) {
+  createOrder(nTickets: string) {
     if(this.userService.currentUser.id == undefined) {
       this.router.navigateByUrl('/login');
       return; //serve essere autenticati per prenotare i posti
     }
 
     //arrivo qua solo se l'utente ha effettuato il login
-    const bookingInfo = new BookingInfo();
-    bookingInfo["filmName"] = this.film.name;
-    bookingInfo["movieTime"] = this.schedules[this.scheduleIndex].movieTime;
-    bookingInfo["roomId"] = this.schedules[this.scheduleIndex].roomId;
-    bookingInfo["nSeats"] = parseInt(nTickets);
-    bookingInfo["userId"] = parseInt(this.userService.currentUser.id);
+    const newOrder = new Order();
+    newOrder["movieTime"] = this.schedules[this.scheduleIndex].movieTime;
+    newOrder["nSeats"] = parseInt(nTickets);
+    newOrder["userId"] = parseInt(this.userService.currentUser.id);
 
-    this.filmService.reserve(bookingInfo).subscribe(() => {
-      //redirige l'utente alla pagina degli ordini
-      this.router.navigateByUrl('/user/orders');
-    });
+    this.orderService.createOrder(newOrder);
+    this.router.navigateByUrl('/payment');
   }
 }

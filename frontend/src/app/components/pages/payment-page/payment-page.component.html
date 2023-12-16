@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="content">
+        <app-title title="Pagamento" fontSize="1.6rem"></app-title>
+        <form [formGroup]="paymentForm">
+            <text-input [control]="fc.name" label="Nome"></text-input>
+        </form>
+    </div>
+
+    <div class="buttons-container">
+        <div class="buttons">
+            <button (click)="bookTickets()">Conferma pagamento</button>
+        </div>
+    </div>
+</div>

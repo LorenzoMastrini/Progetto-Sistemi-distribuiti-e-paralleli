@@ -1,1 +1,20 @@
-<p>orders-page works!</p>
+<app-not-found [visible]="!orders"
+                notFoundMessage="Non hai ancora effettuato ordini!"
+                resetLinkText="Torna alla Homepage">
+</app-not-found>
+
+<div *ngIf="orders" class="container">
+    <ul>
+        <li *ngFor="let order of orders">
+            <div class="info">
+                <p class="movie-time">
+                    {{ order.movieTime }}
+                </p>
+
+                <p class="n-seats">
+                    {{ order.nSeats }}
+                </p>
+            </div>
+        </li>
+    </ul>
+    
