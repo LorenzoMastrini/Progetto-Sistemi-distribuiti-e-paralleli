@@ -111,11 +111,17 @@ def add_schedule(schedule_info):                #funzione per aggiungere un nuov
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
 
-        cur.execute("SELECT * FROM schedule WHERE movie_time = ?", (schedule_info["movieTime"],))
-        row = cur.fetchone()
+        cur.execute("SELECT name FROM film WHERE name = ?", (schedule_info["film"],))
+        film = cur.fetchone()
 
-        if row is not None:
-            return 400
+        if film is None:
+            return 1
+
+        cur.execute("SELECT * FROM schedule WHERE movie_time = ?", (schedule_info["movieTime"],))
+        schedule_already_existing = cur.fetchone()
+
+        if schedule_already_existing is not None:
+            return 2
         
         cur.execute("INSERT INTO schedule (movie_time, film) VALUES (datetime(?), ?)", (schedule_info["movieTime"], schedule_info["film"]))
         conn.commit()
@@ -175,7 +181,30 @@ def update_schedule(update):                    #funzione per aggiornare un orar
     finally:
         conn.close()
 
-    return updated_schedule    
+    return updated_schedule 
+
+def get_schedules():
+    schedules = []
+    try:
+        conn = connect_to_db()
+        conn.row_factory = sqlite3.Row
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM schedule")
+        rows = cur.fetchall()
+
+        # convert row objects to dictionary
+        for i in rows:
+            schedule = {}
+            schedule["scheduleId"] = i["id"]
+            schedule["movieTime"] = i["movie_time"]
+            schedule["film"] = i["film"]
+            schedule["seatsAvailable"] = i["seats_available"]
+
+            schedules.append(schedule)
+    except:
+        schedules = []
+
+    return schedules  
 
 @app.errorhandler(werkzeug.exceptions.BadRequest)
 def handle_bad_request(e):
@@ -190,14 +219,34 @@ def api_add_film():
     else:
         return jsonify(result)
     
+@app.route('/api/admin/films/delete/<film_id>', methods=['DELETE'])           #route a cui il client fa richiesta per eliminare un film
+def api_delete_film(film_id):
+    return jsonify(delete_film(film_id))
+    
 @app.route('/api/admin/films/schedule/add-schedule', methods=['POST'])                #route a cui il client fa richiesta per aggiungere un orario
 def api_add_schedule():
     schedule_info = request.get_json()
     result = add_schedule(schedule_info)
-    if result == 400:
+    if result == 1:
+        return handle_bad_request("Film non esistente")
+    elif result == 2:
         return handle_bad_request("Sala occupata")
     else:
         return jsonify(result)
+    
+@app.route('/api/admin/films/schedule/delete/<id>', methods=['DELETE'])      #route a cui il client fa richiesta per eliminare un orario
+def api_delete_schedule(id):
+    return jsonify(delete_schedule(id))
+
+@app.route('/api/admin/films/schedule/update', methods=['PUT'])             #route a cui il client fa richiesta per aggiornare un orario
+def api_update_schedule():
+    update = request.get_json()
+    result = update_schedule(update)
+    return jsonify(result)
+
+@app.route('/api/admin/films/schedule/get-schedules', methods=['GET'])      #route a cui il client fa richiesta per prendere tutti gli orari
+def api_get_schedules():
+    return jsonify(get_schedules())
 
 @app.route('/api/admin/users/<user_id>', methods=['GET'])                     #route a cui il client fa richiesta per vedere un utente specifico
 def api_get_user(user_id):
@@ -211,16 +260,4 @@ def api_get_users():
 def api_delete_users(user_id):
     return jsonify(delete_users(user_id))
 
-@app.route('/api/admin/films/delete/<film_id>', methods=['DELETE'])           #route a cui il client fa richiesta per eliminare un film
-def api_delete_film(film_id):
-    return jsonify(delete_film(film_id))
 
-@app.route('/api/admin/films/schedule/delete/<id>', methods=['DELETE'])      #route a cui il client fa richiesta per eliminare un orario
-def api_delete_schedule(id):
-    return jsonify(delete_schedule(id))
-
-@app.route('/api/admin/films/schedule/update', methods=['PUT'])         #route a cui il client fa richiesta per aggiornare un orario
-def api_update_schedule():
-    update = request.get_json()
-    result = update_schedule(update)
-    return jsonify(result)

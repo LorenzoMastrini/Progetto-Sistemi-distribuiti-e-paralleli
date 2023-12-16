@@ -22,7 +22,7 @@ CREATE TABLE users (
     name TEXT NOT NULL,
     email TEXT NOT NULL,
     password TEXT NOT NULL,
-    is_admin BOOL NOT NULL DEFAULT false
+    is_admin INTEGER NOT NULL DEFAULT 0
 );
 
 CREATE TABLE reservation (

@@ -44,7 +44,28 @@ def login(login_info):                              #funzione per verificare l'e
         cur.execute("SELECT * FROM users WHERE email = ? AND password = ?", (login_info["email"], password_hash))     
         row = cur.fetchone()
 
-        if (row["email"] == login_info["email"]) and (row["password"] == password_hash):           
+        if (row["email"] == login_info["email"]) and (row["password"] == password_hash):
+            '''if(row["is_admin"] == 0):
+                row["is_admin"] = " "
+
+                user["id"] = row["user_id"]
+                user["name"] = row["name"]
+                user["email"] = row["email"]
+                user["password"] = row["password"]
+                session["user"] = row["name"]
+                user["token"] = session["user"]
+                user["isAdmin"] = row["is_admin"]
+            elif(row["is_admin"] == 1):
+                row["is_admin"] = "True"
+                
+                user["id"] = row["user_id"]
+                user["name"] = row["name"]
+                user["email"] = row["email"]
+                user["password"] = row["password"]
+                session["user"] = row["name"]
+                user["token"] = session["user"]
+                user["isAdmin"] = row["is_admin"]'''
+            
             user["id"] = row["user_id"]
             user["name"] = row["name"]
             user["email"] = row["email"]
@@ -52,7 +73,7 @@ def login(login_info):                              #funzione per verificare l'e
             session["user"] = row["name"]
             user["token"] = session["user"]
             user["isAdmin"] = row["is_admin"]
-
+            
             return user 
     except:
         return 400
