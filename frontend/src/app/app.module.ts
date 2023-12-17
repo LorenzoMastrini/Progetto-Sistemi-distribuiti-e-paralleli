@@ -21,6 +21,8 @@ import { RegisterPageComponent } from './components/pages/register-page/register
 import { OrdersPageComponent } from './components/pages/orders-page/orders-page.component';
 import { PaymentPageComponent } from './components/pages/payment-page/payment-page.component';
 import { AdminHomeComponent } from './components/pages/admin-home/admin-home.component';
+import { AdminAddFilmComponent } from './components/pages/admin-add-film/admin-add-film.component';
+import { AdminAddScheduleComponent } from './components/partials/admin-add-schedule/admin-add-schedule.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { AdminHomeComponent } from './components/pages/admin-home/admin-home.com
     RegisterPageComponent,
     OrdersPageComponent,
     PaymentPageComponent,
-    AdminHomeComponent
+    AdminHomeComponent,
+    AdminAddFilmComponent,
+    AdminAddScheduleComponent
   ],
   imports: [
     BrowserModule,
