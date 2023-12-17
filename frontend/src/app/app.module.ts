@@ -20,6 +20,7 @@ import { DefaultButtonComponent } from './components/partials/default-button/def
 import { RegisterPageComponent } from './components/pages/register-page/register-page.component';
 import { OrdersPageComponent } from './components/pages/orders-page/orders-page.component';
 import { PaymentPageComponent } from './components/pages/payment-page/payment-page.component';
+import { AdminHomeComponent } from './components/pages/admin-home/admin-home.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { PaymentPageComponent } from './components/pages/payment-page/payment-pa
     DefaultButtonComponent,
     RegisterPageComponent,
     OrdersPageComponent,
-    PaymentPageComponent
+    PaymentPageComponent,
+    AdminHomeComponent
   ],
   imports: [
     BrowserModule,
