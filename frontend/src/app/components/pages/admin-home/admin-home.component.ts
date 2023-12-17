@@ -16,7 +16,7 @@ export class AdminHomeComponent {
   films: Film[] = [];
   schedules: Schedule[] = [];
 
-  constructor(filmService: FilmService, activatedRoute: ActivatedRoute, private adminService:AdminService) {
+  constructor(filmService: FilmService, activatedRoute: ActivatedRoute, adminService:AdminService) {
     let filmsObservable: Observable<Film[]>; //per ottere gli observable di tutti i metodi chiamati che si connettono al backend, poi facendo subscribe per ottere i film
     //altrimenti dovrei fare subscribe per ognuno dei metodi chiamati separatamente
     
