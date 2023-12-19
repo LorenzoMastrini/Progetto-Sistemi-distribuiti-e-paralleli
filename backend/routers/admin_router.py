@@ -16,7 +16,7 @@ def get_users():                                    #funzione per vedere tutti g
         # convert row objects to dictionary
         for i in rows:
             user = {}
-            user["userId"] = i["user_id"]
+            user["id"] = i["user_id"]
             user["name"] = i["name"]
             user["email"] = i["email"]
             user["password"] = i["password"]
@@ -37,7 +37,7 @@ def get_user_by_id(user_id):                        #funzione per vedere un uten
         cur.execute("SELECT * FROM users WHERE user_id = ?", (user_id,))
         row = cur.fetchone()
 
-        user["userId"] = row["user_id"]
+        user["id"] = row["user_id"]
         user["name"] = row["name"]
         user["email"] = row["email"]
         user["password"] = row["password"]
