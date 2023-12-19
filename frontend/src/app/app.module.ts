@@ -23,6 +23,8 @@ import { PaymentPageComponent } from './components/pages/payment-page/payment-pa
 import { AdminHomeComponent } from './components/pages/admin-home/admin-home.component';
 import { AdminAddFilmComponent } from './components/pages/admin-add-film/admin-add-film.component';
 import { AdminAddScheduleComponent } from './components/partials/admin-add-schedule/admin-add-schedule.component';
+import { AdminOrdersComponent } from './components/pages/admin-orders/admin-orders.component';
+import { AdminUsersComponent } from './components/pages/admin-users/admin-users.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { AdminAddScheduleComponent } from './components/partials/admin-add-sched
     PaymentPageComponent,
     AdminHomeComponent,
     AdminAddFilmComponent,
-    AdminAddScheduleComponent
+    AdminAddScheduleComponent,
+    AdminOrdersComponent,
+    AdminUsersComponent,
   ],
   imports: [
     BrowserModule,

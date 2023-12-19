@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="film">
+        <div *ngFor="let user of users">
+            <div class="user-info">
+                {{ user.name }}
+                {{ user.email }}
+                {{ user.isAdmin }}
+            </div>
+
+            <div class="buttons-container">
+                <button (click)="changeAdminStatus(user.id)" class="change-admin-status">
+                    Cambia stato
+                </button>
+            </div>
+        </div>
+    </div>    
+</div>

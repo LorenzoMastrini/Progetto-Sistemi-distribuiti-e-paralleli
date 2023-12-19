@@ -26,7 +26,7 @@ export class FilmPageComponent implements OnInit {
   scheduleIndex!: number; //valore letto dall'html dinamicamente in base all'orario selezionato dall'utente (poi usato per verificare i posti disponibili)
 
   constructor(activatedRoute:ActivatedRoute,
-              private filmService:FilmService,
+              filmService:FilmService,
               private orderService:OrderService,
               private router:Router,
               private formBuilder:FormBuilder,
