@@ -183,7 +183,7 @@ def update_schedule(update):                    #funzione per aggiornare un orar
 
     return updated_schedule 
 
-def get_schedules():
+def get_schedules():                            #funzione per ritornare tutti gli orari
     schedules = []
     try:
         conn = connect_to_db()
@@ -204,7 +204,60 @@ def get_schedules():
     except:
         schedules = []
 
-    return schedules  
+    return schedules 
+
+def get_all_orders():
+    orders = []
+    try:
+        conn = connect_to_db()
+        conn.row_factory = sqlite3.Row
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM reservation")
+        rows = cur.fetchall()
+
+        # convert row objects to dictionary
+        for i in rows:
+            order = {}
+            order["orderId"] = i["id"]
+            order["movieTime"] = i["movie_time"]
+            order["userId"] = i["user_id"]
+            order["nSeats"] = i["n_seats"]
+
+            orders.append(order)
+    except:
+        orders = []
+
+    return orders 
+
+def change_admin(user_id):
+    user = {}
+    try:
+        conn = connect_to_db()
+        conn.row_factory = sqlite3.Row
+        cur = conn.cursor()
+
+        cur.execute("SELECT is_admin FROM users WHERE user_id = ?", (user_id,))   
+        row = cur.fetchone()
+        if(row["is_admin"] == 0):
+            cur.execute("UPDATE users SET is_admin = 1 WHERE user_id = ?", (user_id,))
+        else:
+             cur.execute("UPDATE users SET is_admin = 0 WHERE user_id = ?", (user_id,))   
+        
+        conn.commit()
+
+        cur.execute("SELECT * FROM users WHERE user_id = ?", (user_id,))   
+        row = cur.fetchone()
+        user["userId"] = row["user_id"]
+        user["name"] = row["name"]
+        user["email"] = row["email"]
+        user["password"] = row["password"]
+        user["isAdmin"] = row["is_admin"]       
+    except:
+        conn.rollback()
+    finally:
+        conn.close()    
+
+    return user 
 
 @app.errorhandler(werkzeug.exceptions.BadRequest)
 def handle_bad_request(e):
@@ -233,7 +286,7 @@ def api_add_schedule():
         return handle_bad_request("Sala occupata")
     else:
         return jsonify(result)
-    
+
 @app.route('/api/admin/films/schedule/delete/<id>', methods=['DELETE'])      #route a cui il client fa richiesta per eliminare un orario
 def api_delete_schedule(id):
     return jsonify(delete_schedule(id))
@@ -260,4 +313,11 @@ def api_get_users():
 def api_delete_users(user_id):
     return jsonify(delete_users(user_id))
 
+@app.route('/api/admin/users/orders', methods=['GET'])                         #route a cui il client fa richiesta per prendere le prenotazioni di tutti gli utenti
+def api_get_all_orders():
+    return jsonify(get_all_orders())
+
+@app.route('/api/admin/users/change-admin/<user_id>', methods=['PUT'])         #route a cui il client fa richiesta per promuovere o declassare un utente
+def api_create_admin(user_id):
+    return jsonify(change_admin(user_id))
 
