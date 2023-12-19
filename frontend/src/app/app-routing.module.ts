@@ -8,6 +8,8 @@ import { OrdersPageComponent } from './components/pages/orders-page/orders-page.
 import { PaymentPageComponent } from './components/pages/payment-page/payment-page.component';
 import { AdminHomeComponent } from './components/pages/admin-home/admin-home.component';
 import { AdminAddFilmComponent } from './components/pages/admin-add-film/admin-add-film.component';
+import { AdminOrdersComponent } from './components/pages/admin-orders/admin-orders.component';
+import { AdminUsersComponent } from './components/pages/admin-users/admin-users.component';
 
 const routes: Routes = [
   { path:"", component: HomeComponent }, //homepage dell'app
@@ -18,7 +20,9 @@ const routes: Routes = [
   { path:"register", component: RegisterPageComponent },
   { path:"payment", component: PaymentPageComponent },
   { path:"users/orders/:userToken", component: OrdersPageComponent },
-  { path:"admin/add-film", component: AdminAddFilmComponent }
+  { path:"admin/add-film", component: AdminAddFilmComponent },
+  { path:"admin/orders", component: AdminOrdersComponent },
+  { path:"admin/users", component: AdminUsersComponent }
 ];
 
 @NgModule({

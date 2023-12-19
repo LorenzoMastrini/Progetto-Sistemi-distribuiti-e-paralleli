@@ -40,5 +40,7 @@ export class AdminAddScheduleComponent {
       let prova: Schedule = serverNewSchedule;
       console.log(prova);
     });
+
+    window.location.reload();
   }
 }

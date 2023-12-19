@@ -1,6 +1,10 @@
 <header>
     <div class="container">
-        <a routerLink="/" class="logo">Kinetoscope</a>
+        <a *ngIf="user.isAdmin; else elseBlock" routerLink="/admin" class="logo">Kinetoscope</a>
+        <ng-template #elseBlock>
+            <a routerLink="/" class="logo">Kinetoscope</a>
+        </ng-template>
+        
         <nav>
             <ul>
                 <!--mostro il pulsante login solo se l'utente non è autenticato-->
@@ -12,7 +16,8 @@
                 <li *ngIf="isAuth" class="menu-container">
                     <a routerLink="/dashboard">{{ user.name }}</a>
                     <div class="menu">
-                        <a routerLink="users/orders/{{user.token}}">Ordini</a>
+                        <a routerLink="/admin/orders">Ordini</a>
+                        <a *ngIf="user.isAdmin" routerLink="/admin/users">Utenti</a>
                         <a (click)="logout()">Logout</a>
                     </div>
                 </li>
