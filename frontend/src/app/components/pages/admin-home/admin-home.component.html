@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="film">
+        <div *ngFor="let film of films">
+            {{ film.name }}
+            <div class="movie-schedule-info" *ngFor="let schedule of schedules">
+                <div *ngIf="schedule.film == film.name">
+                    {{ schedule.movieTime }}
+                    {{ schedule.seatsAvailable }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="buttons-container">
+        <button class="add-film">
+            <a routerLink="/admin/add-film">Aggiungi nuovo film</a>
+        </button>
+    </div>
+
+    <app-admin-add-schedule></app-admin-add-schedule>
+</div>

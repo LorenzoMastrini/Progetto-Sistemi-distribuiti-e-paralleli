@@ -1,0 +1,21 @@
+<div class="container">
+    <app-title title="Aggiungi orario"></app-title>
+
+    <form [formGroup]="addScheduleForm" (ngSubmit)="submit()">
+        <text-input
+            [control]="fc.scheduleFilm"
+            [showErrorsWhen]="isSubmitted"
+            type="scheduleFilm"
+            label="Film">
+        </text-input>
+
+        <text-input
+            [control]="fc.scheduleTime"
+            [showErrorsWhen]="isSubmitted"
+            type="scheduleTime"
+            label="aaaa-mm-gg hh:mm:ss">
+        </text-input>
+
+        <default-button text="Aggiungi orario"></default-button>
+    </form>
+</div>

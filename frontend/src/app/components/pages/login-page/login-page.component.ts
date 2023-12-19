@@ -41,9 +41,14 @@ export class LoginPageComponent implements OnInit {
       return; //torna se il form non è valido
     }
   
-    this.userService.login({email: this.fc.email.value, password: this.fc.password.value}).subscribe(() => {
-        //torna all'url precedente se il login avviene con successo  
+    this.userService.login({email: this.fc.email.value, password: this.fc.password.value}).subscribe(() => {      
+      if(this.userService.currentUser.isAdmin) {
+        //va alla home dell'admin
+        this.router.navigateByUrl('/admin');
+      } else {
+        //torna all'url precedente se il login avviene con successo
         this.router.navigateByUrl(this.returnUrl);
-      });
+      }
+    });
   }
 }

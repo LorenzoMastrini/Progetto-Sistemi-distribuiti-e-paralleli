@@ -10,3 +10,8 @@ export const USER_URL = BASE_URL + '/api/users';
 export const USER_LOGIN_URL = USER_URL + '/login'; //url per l'api del login
 export const USER_REGISTER_URL = USER_URL + '/registration'; //url per l'api della registrazione di nuovi utenti
 export const USER_ORDERS_URL = USER_URL + '/orders/'; //url per l'api della registrazione di nuovi utenti
+
+export const ADMIN_URL = BASE_URL + '/api/admin';
+export const ADMIN_GET_ALL_SCHEDULES = ADMIN_URL + '/films/schedule/get-schedules';
+export const ADMIN_ADD_FILM = ADMIN_URL + '/films/add-film';
+export const ADMIN_ADD_SCHEDULE = ADMIN_URL + '/films/schedule/add-schedule';
