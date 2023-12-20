@@ -17,3 +17,4 @@ export const ADMIN_ADD_FILM = ADMIN_URL + '/films/add-film';
 export const ADMIN_ADD_SCHEDULE = ADMIN_URL + '/films/schedule/add-schedule';
 export const ADMIN_GET_ALL_USERS = ADMIN_URL + '/users';
 export const ADMIN_CHANGE_ADMIN_STATUS = ADMIN_URL + '/users/change-admin/';
+export const ADMIN_GET_ALL_ORDERS = ADMIN_URL + '/users/orders';
