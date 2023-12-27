@@ -10,19 +10,20 @@ import { AdminHomeComponent } from './components/pages/admin-home/admin-home.com
 import { AdminAddFilmComponent } from './components/pages/admin-add-film/admin-add-film.component';
 import { AdminOrdersComponent } from './components/pages/admin-orders/admin-orders.component';
 import { AdminUsersComponent } from './components/pages/admin-users/admin-users.component';
+import { isAdminGuard } from './guards/is-admin.guard';
+import { isAuthenticatedGuard } from './guards/is-authenticated.guard';
 
 const routes: Routes = [
   { path:"", component: HomeComponent }, //homepage dell'app
-  { path:"admin", component: AdminHomeComponent }, //homepage dell'app
-  //{ path:"search/:searchTerm", component: HomeComponent }, //forse utile con name al posto di searchTerm
+  { path:"admin", component: AdminHomeComponent, canActivate: [isAdminGuard]}, //homepage dell'app per un utente admin
   { path:"film/:name", component: FilmPageComponent },
   { path:"login", component: LoginPageComponent },
   { path:"register", component: RegisterPageComponent },
-  { path:"payment", component: PaymentPageComponent },
-  { path:"users/orders/:userToken", component: OrdersPageComponent },
-  { path:"admin/add-film", component: AdminAddFilmComponent },
-  { path:"admin/orders", component: AdminOrdersComponent },
-  { path:"admin/users", component: AdminUsersComponent }
+  { path:"payment", component: PaymentPageComponent, canActivate: [isAuthenticatedGuard] },
+  { path:"users/orders/:userToken", component: OrdersPageComponent, canActivate: [isAuthenticatedGuard] },
+  { path:"admin/add-film", component: AdminAddFilmComponent, canActivate: [isAdminGuard] },
+  { path:"admin/orders", component: AdminOrdersComponent, canActivate: [isAdminGuard] },
+  { path:"admin/users", component: AdminUsersComponent, canActivate: [isAdminGuard] }
 ];
 
 @NgModule({

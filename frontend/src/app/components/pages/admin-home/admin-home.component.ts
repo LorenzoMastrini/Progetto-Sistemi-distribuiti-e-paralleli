@@ -15,6 +15,9 @@ import { Schedule } from 'src/app/shared/models/Schedule';
 export class AdminHomeComponent {
   films: Film[] = [];
   schedules: Schedule[] = [];
+  nSchedulesPerFilm = new Map<string, number>([
+    ["default", 0]
+  ])!;
 
   constructor(filmService: FilmService, activatedRoute: ActivatedRoute, adminService:AdminService) {
     let filmsObservable: Observable<Film[]>; //per ottere gli observable di tutti i metodi chiamati che si connettono al backend, poi facendo subscribe per ottere i film
@@ -38,7 +41,19 @@ export class AdminHomeComponent {
 
       schedulesObservable.subscribe((serverSchedules) => {
         this.schedules = serverSchedules;
+
+        this.films.forEach(film => {
+          this.nSchedulesPerFilm.set(film.name, this.schedules.filter((schedule) => schedule.film === film.name).length);
+        });
       });
     });
   }
+
+  greaterThan(subj:number, num:number): boolean {
+    return subj > num;
+  }
+/*
+  getNumberOfSchedules(filmName:string): number {
+    return this.nSchedulesPerFilm.get(filmName) === undefined ? 0 : this.nSchedulesPerFilm.get(filmName);
+  }*/
 }

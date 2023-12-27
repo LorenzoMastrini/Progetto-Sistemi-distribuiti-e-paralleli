@@ -29,8 +29,7 @@ export class AdminUsersComponent {
 
   changeAdminStatus(userId: string) {
     this.adminService.changeAdminStatus(userId).subscribe(() => {
-      console.log(userId);
-      //window.location.reload();
+      window.location.reload();
     });
   }
 }

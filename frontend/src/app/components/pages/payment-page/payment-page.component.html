@@ -2,13 +2,38 @@
     <div class="content">
         <app-title title="Pagamento" fontSize="1.6rem"></app-title>
         <form [formGroup]="paymentForm">
-            <text-input [control]="fc.name" label="Nome"></text-input>
+            <text-input
+                [control]="fc.name"
+                [showErrorsWhen]="isSubmitted"
+                label="Nome">
+            </text-input>
+            <text-input
+                [control]="fc.surname"
+                [showErrorsWhen]="isSubmitted"
+                label="Cognome">
+            </text-input>
+            <text-input [control]="fc.cardNumber"
+                [showErrorsWhen]="isSubmitted"
+                label="Numero Carta">
+            </text-input>
+            <text-input
+                [control]="fc.expireDate"
+                [showErrorsWhen]="isSubmitted"
+                label="Data di Scadenza">
+            </text-input>
+            <text-input
+                [control]="fc.cvv"
+                [showErrorsWhen]="isSubmitted"
+                label="CVV">
+            </text-input>
         </form>
     </div>
-
-    <div class="buttons-container">
-        <div class="buttons">
-            <button (click)="bookTickets()">Conferma pagamento</button>
-        </div>
+    
+    <div class="checkout">
+        <span class="total-price">
+            {{ totalPrice | currency }}
+        </span>
+        
+        <button (click)="bookTickets()">Conferma pagamento</button>
     </div>
 </div>

@@ -1,9 +1,7 @@
 <header>
     <div class="container">
-        <a *ngIf="user.isAdmin; else elseBlock" routerLink="/admin" class="logo">Kinetoscope</a>
-        <ng-template #elseBlock>
-            <a routerLink="/" class="logo">Kinetoscope</a>
-        </ng-template>
+        <a *ngIf="user.isAdmin" routerLink="/admin" class="logo">Kinetoscope</a>
+        <a *ngIf="!user.isAdmin or user == undefined" routerLink="/" class="logo">Kinetoscope</a>
         
         <nav>
             <ul>
@@ -16,7 +14,8 @@
                 <li *ngIf="isAuth" class="menu-container">
                     <a routerLink="/dashboard">{{ user.name }}</a>
                     <div class="menu">
-                        <a routerLink="/admin/orders">Ordini</a>
+                        <a *ngIf="!user.isAdmin" routerLink="users/orders/{{user.token}}">Ordini</a>
+                        <a *ngIf="user.isAdmin" routerLink="/admin/orders">Ordini</a>
                         <a *ngIf="user.isAdmin" routerLink="/admin/users">Utenti</a>
                         <a (click)="logout()">Logout</a>
                     </div>
