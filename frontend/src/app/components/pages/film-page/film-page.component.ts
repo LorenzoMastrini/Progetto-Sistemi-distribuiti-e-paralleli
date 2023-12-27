@@ -19,7 +19,7 @@ export class FilmPageComponent implements OnInit {
   pricePerTicket = FILMS_PRICE_PER_TICKET;
   film!: Film;
   schedules!: Schedule[]; //lista degli orari disponibili per il film selezionato
-  totalPrice?: number; //prezzo per ogni biglietto, poi moltiplicato per il numero di biglietti prenotati
+  totalPrice!: number; //prezzo per ogni biglietto, poi moltiplicato per il numero di biglietti prenotati
   bookingForm!: FormGroup;
   isSubmitted = false;
   maxBookableTickets: number[] = []; //si possono prenotare al massimo 10 biglietti (se almeno 10 posti sono disponibili)
@@ -83,6 +83,7 @@ export class FilmPageComponent implements OnInit {
     newOrder["movieTime"] = this.schedules[this.scheduleIndex].movieTime;
     newOrder["nSeats"] = parseInt(nTickets);
     newOrder["userId"] = parseInt(this.userService.currentUser.id);
+    newOrder["totalPrice"] = this.totalPrice;
 
     this.orderService.createOrder(newOrder);
     this.router.navigateByUrl('/payment');

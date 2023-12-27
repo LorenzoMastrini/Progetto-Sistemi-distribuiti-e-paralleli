@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { OrderService } from 'src/app/services/order.service';
 import { UserService } from 'src/app/services/user.service';
-import { Order } from 'src/app/shared/models/Order';
 
 @Component({
   selector: 'app-payment-page',
@@ -14,6 +13,8 @@ import { Order } from 'src/app/shared/models/Order';
 
 export class PaymentPageComponent implements OnInit {
   paymentForm!: FormGroup;
+  totalPrice!: number;
+  isSubmitted = false;
 
   constructor(private formBuilder:FormBuilder,
               private userService:UserService,
@@ -22,9 +23,16 @@ export class PaymentPageComponent implements OnInit {
               private orderService:OrderService) { }
 
   ngOnInit(): void {
-    let {name} = this.userService.currentUser;
     this.paymentForm = this.formBuilder.group({
-      name: [name, Validators.required]
+      name: ['', Validators.required],
+      surname: ['', Validators.required],
+      cardNumber: ['', Validators.required],
+      expireDate: ['', Validators.required],
+      cvv: ['', Validators.required]
+    });
+
+    this.orderService.getOrderObservable().subscribe((order) => {
+      this.totalPrice = order.totalPrice;
     });
   }
 
@@ -33,6 +41,8 @@ export class PaymentPageComponent implements OnInit {
   }
 
   bookTickets() {
+    this.isSubmitted = true;
+
     if(this.paymentForm.invalid) {
       this.toastrService.warning("Si prega di compilare i campi obbligatori.", "Input non validi");
       return;

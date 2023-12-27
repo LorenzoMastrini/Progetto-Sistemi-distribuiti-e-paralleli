@@ -1,4 +1,5 @@
 <div class="container">
+    <!--
     <div class="film">
         <div *ngFor="let film of films">
             {{ film.name }}
@@ -10,11 +11,67 @@
             </div>
         </div>
     </div>
+    -->
+    
+
+
+
+    <table class="schedules-list">
+        <tr>
+            <td colspan="3">
+                <h3>Programmazione completa:</h3>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="1">
+                <h4>Film</h4>
+            </td>
+            <td colspan="1">
+                <h4>Orari</h4>
+            </td>
+            <td colspan="1">
+                <h4>Posti disponibili</h4>
+            </td>
+        </tr>
+
+        <tr *ngFor="let schedule of schedules">
+            <td>
+                {{ schedule.film }}
+            </td>
+            <td>
+                {{ schedule.movieTime }}
+            </td>
+            <td>
+                {{ schedule.seatsAvailable }}
+            </td>
+        </tr>
+<!--
+        <tr *ngFor="let film of films">
+            <td [rowSpan]="nSchedulesPerFilm.get(film.name)">
+                <img [src]="film.imageUrl"/>
+            </td>
+            <td [rowSpan]="nSchedulesPerFilm.get(film.name)">
+                {{ film.name }}
+            </td>
+
+            <ng-container *ngFor="let schedule of schedules">
+                <tr *ngIf="schedule.film == film.name">
+                    <td class="movie-time">
+                        {{ schedule.movieTime }}
+                    </td>
+
+                    <td class="movie-time">
+                        {{ schedule.seatsAvailable }}
+                    </td>
+                </tr>
+            </ng-container>
+        </tr>
+        -->
+    </table>
 
     <div class="buttons-container">
-        <button class="add-film">
-            <a routerLink="/admin/add-film">Aggiungi nuovo film</a>
-        </button>
+        <default-button class="add-film-button" routerLink="/admin/add-film" text="Aggiungi film"></default-button>
     </div>
 
     <app-admin-add-schedule></app-admin-add-schedule>

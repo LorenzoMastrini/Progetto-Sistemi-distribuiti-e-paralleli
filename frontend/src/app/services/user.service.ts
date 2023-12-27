@@ -66,8 +66,8 @@ export class UserService {
   logout() {
     this.userSubject.next(new User());
     localStorage.removeItem(USER_KEY);
-    window.location.reload(); //refresh della pagina
     this.router.navigateByUrl('/');
+    window.location.reload(); //refresh della pagina
   }
 
   //uso localStorage per salvare l'utente così da non dover rifare il login dopo un refresh della pagina (come cart-page)

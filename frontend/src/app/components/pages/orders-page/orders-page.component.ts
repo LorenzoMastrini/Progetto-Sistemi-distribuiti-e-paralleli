@@ -15,11 +15,12 @@ import { Order } from 'src/app/shared/models/Order';
 export class OrdersPageComponent {
   orders!: Order[];
   
-  constructor(activatedRoute:ActivatedRoute, private orderService:OrderService) {
+  constructor(activatedRoute:ActivatedRoute, orderService:OrderService) {
     //ogni volta che 'params' cambia, chiama la funzione dentro 'subscribe()'
     activatedRoute.params.subscribe((params) => {
-      orderService.getAllOrders(params.userId).subscribe((serverOrders) => {
+      orderService.getAllOrders(params.userToken).subscribe((serverOrders) => {
         this.orders = serverOrders;
+        console.log(params.userToken);
       }); //se non è stato cercato nulla mostra tutto per default
     });
   }

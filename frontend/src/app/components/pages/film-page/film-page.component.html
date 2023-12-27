@@ -4,70 +4,74 @@
 </app-not-found>
 
 <div *ngIf="film" class="container">
-    <img [src]="film.imageUrl" [alt]="film.name"/>
+    <div class="film">
+        <img [src]="film.imageUrl" [alt]="film.name"/>
 
-    <div class="info">
-        <div class="header">
+        <div class="info">
             <span class="name">
                 {{ film.name }}
             </span>
-        </div>
 
-        <span class="duration">
-            <strong>Durata: </strong>{{ film.duration }} min
-        </span>
-        <div class="genres">
-            <p *ngFor="let genre of film.genres">
-                {{ genre }}
-            </p>
-        </div>
-        
-        <div class="director">
-            <span>
-                <strong>Regista: </strong>{{ film.director }}
+            <span class="duration">
+                <strong>Durata: </strong>{{ film.duration }} min
             </span>
-        </div>
-
-        <div class="origins">
-            <span *ngFor="let origin of film.origins">
-                <strong>Paese di produzione: </strong> {{ origin }}
-            </span>
-        </div>
-        
-        <span class="plot">
-            {{ film.plot }}
-        </span>
-
-        <div class="price">
-            <span>
-                {{ pricePerTicket | currency }}
-            </span>
-            <span>
-                {{ totalPrice | currency }}
-            </span>
-        </div>
-    </div>
-
-    <div class="booking">
-        <form [formGroup]="bookingForm">
-            <div *ngFor="let schedule of schedules; let i = index">
-                <label [for]="'radio-'+schedule.movieTime">
-                    {{ schedule.movieTime }}
-                    <input (change)="checkAvailableSeats()" #radio [(ngModel)]="scheduleIndex" [id]="'radio-'+schedule.movieTime" type="radio" [value]='i' formControlName="movieTimeRadio"/>
-                </label>
+            <!--
+            <div class="genres">
+                <p *ngFor="let genre of film.genres">
+                    {{ genre }}
+                </p>
             </div>
-
-            <div class="selectTickets">
-                <select #quantitySelect (change)="changeNumberOfTickets(quantitySelect.value)" formControlName="nTickets">
-                    <option *ngFor="let nTickets of maxBookableTickets" [value]="nTickets">
-                        {{nTickets}}
-                    </option>
-                </select>
+            -->
+            <div class="director">
+                <span>
+                    <strong>Regista: </strong>{{ film.director }}
+                </span>
             </div>
-        </form>
-    </div>
+            <!--
+            <div class="origins">
+                <span *ngFor="let origin of film.origins">
+                    <strong>Paese di produzione: </strong> {{ origin }}
+                </span>
+            </div>
+            -->
+            <span class="plot">
+                {{ film.plot }}
+            </span>
 
-    <div class="footer">
-        <button (click)="createOrder(quantitySelect.value)">Prenota</button>
+            <div class="booking">
+                <span class="price-per-ticket">
+                    {{ pricePerTicket | currency }}
+                </span>
+                    
+                <form [formGroup]="bookingForm">
+                    <div class="select-schedule">
+                        <p>Seleziona un orario:</p>
+                        <div *ngFor="let schedule of schedules; let i = index">
+                            <label [for]="'radio-'+schedule.movieTime">
+                                {{ schedule.movieTime }}
+                                <input (change)="checkAvailableSeats()" #radio [(ngModel)]="scheduleIndex" [id]="'radio-'+schedule.movieTime" type="radio" [value]='i' formControlName="movieTimeRadio"/>
+                            </label>
+                        </div>
+                    </div>
+        
+                    <div class="select-tickets">
+                        <p>Seleziona il numero di biglietti:&nbsp;&nbsp;</p>
+                        <select #quantitySelect (change)="changeNumberOfTickets(quantitySelect.value)" formControlName="nTickets">
+                            <option *ngFor="let nTickets of maxBookableTickets" [value]="nTickets">
+                                {{ nTickets }}
+                            </option>
+                        </select>
+                    </div>
+                </form>
+        
+                <span class="total-price">
+                    {{ totalPrice | currency }}
+                </span>
+            </div>
+        
+            <div class="button-container">
+                <button (click)="createOrder(quantitySelect.value)">Prenota</button>
+            </div>
+        </div>
     </div>
 </div>

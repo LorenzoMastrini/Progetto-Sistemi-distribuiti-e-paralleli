@@ -5,6 +5,11 @@
     flex-direction: column;
 }
 
+.film {
+    display: flex;
+    flex-direction: row;
+}
+
 .info {
     width: 100%;
     display: flex;
@@ -12,8 +17,9 @@
     flex: 1 0;
     padding: 2rem;
     color: white;
-    justify-content: center;
-    align-items: center;
+    justify-content: right;
+    align-items: left;
+    justify-content: space-between;
 }
 
 .name{
@@ -21,59 +27,59 @@
     font-weight: bold;
 }
 
-.general {
-    color: lightgray;
-    font-size: 18px;
-    display: flex;
-}
-
-.duration {
-    padding-right: 5rem;
-}
-
-.tags {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.tags a {
-    padding-right: 0.5rem;
-    margin: none;
-    color: lightgray;
-}
-
-.tags a:hover {
-    color: white;
-}
-
-.description {
-    font-size: 18px;
-    padding-top: 1.5rem;
-    color: lightgray;
-}
-
-.details {
-    padding-top: 7rem;
-}
-
-.origins, .director, .year {
+.origins, .director {
     display: flex;
     flex-wrap: wrap;
     margin: 0.5rem 0;
 }
 
-.price{
-    font-size: 1.8rem;
-    margin: 2rem 2rem 2rem 0;
-    color: green;
+.booking {
+    display: flex;
+    flex-direction: column;
+    padding-top: 5rem;
 }
 
-.price::before{
-    content: "Price: ";
+.price-per-ticket {
+    font-size: 1.8rem;
+    margin: 2rem 2rem 2rem 0;
+}
+
+.price-per-ticket::before {
+    content: "Prezzo: ";
     color: darkgrey;
 }
 
-.footer {
+.select-tickets {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+select {
+    appearance: none;
+    /* safari */
+    -webkit-appearance: none;
+    /* other styles for aesthetics */
+    font-size: 1.15rem;
+    padding: 0.3rem 1rem 0.3rem 1rem;
+    background-color: #fff;
+    border: 1px solid #caced1;
+    border-radius: 0.3rem;
+    color: black;
+    cursor: pointer;
+}
+
+.total-price {
+    font-size: 1.8rem;
+    margin: 2rem 2rem 2rem 0;
+}
+
+.total-price::before {
+    content: "Prezzo totale: ";
+    color: darkgrey;
+}
+
+.button-container {
     display: flex;
     height: 4rem;
 }
@@ -91,22 +97,4 @@ button {
 button:hover{
     opacity: 0.9;
     cursor: pointer;
-}
-
-.list {
-    text-align: center;
-    width: 4rem;
-    color: #e72929;
-    font-size: 2.5rem;
-    border: 1px solid lightgray;
-    border-radius: 50%;
-    margin-left: 50px;
-}
-
-.favorite.not{
-    color: grey;
-}
-
-label {
-    color: white;
 }

@@ -3,4 +3,5 @@ export class Order {
     movieTime!: string;
     userId!: number;
     nSeats!: number;
+    totalPrice!: number;
 }
