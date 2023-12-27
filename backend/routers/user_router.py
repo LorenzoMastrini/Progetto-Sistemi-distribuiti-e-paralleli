@@ -34,7 +34,7 @@ def registration(registration_info):                #funzione per la registrazio
 def login(login_info):                              #funzione per verificare l'esito del login dell'utente
     user = {}
     try:
-        session.pop("user", None)
+        session.pop("email", None)
 
         conn = connect_to_db()
         conn.row_factory = sqlite3.Row
@@ -44,36 +44,18 @@ def login(login_info):                              #funzione per verificare l'e
         cur.execute("SELECT * FROM users WHERE email = ? AND password = ?", (login_info["email"], password_hash))     
         row = cur.fetchone()
 
-        if (row["email"] == login_info["email"]) and (row["password"] == password_hash):
-            '''if(row["is_admin"] == 0):
-                row["is_admin"] = " "
-
-                user["id"] = row["user_id"]
-                user["name"] = row["name"]
-                user["email"] = row["email"]
-                user["password"] = row["password"]
-                session["user"] = row["name"]
-                user["token"] = session["user"]
-                user["isAdmin"] = row["is_admin"]
-            elif(row["is_admin"] == 1):
-                row["is_admin"] = "True"
-                
-                user["id"] = row["user_id"]
-                user["name"] = row["name"]
-                user["email"] = row["email"]
-                user["password"] = row["password"]
-                session["user"] = row["name"]
-                user["token"] = session["user"]
-                user["isAdmin"] = row["is_admin"]'''
-            
+        if (row["email"] == login_info["email"]) and (row["password"] == password_hash):                 
             user["id"] = row["user_id"]
             user["name"] = row["name"]
             user["email"] = row["email"]
             user["password"] = row["password"]
-            session["user"] = row["name"]
-            user["token"] = session["user"]
+            session["email"] = row["email"]
+            user["token"] = hashlib.sha256(session["email"].encode('utf-8')).hexdigest()
             user["isAdmin"] = row["is_admin"]
-            
+
+            cur.execute("UPDATE users SET token = ? WHERE user_id = ?", (user["token"], user["id"]))
+            conn.commit()
+
             return user 
     except:
         return 400
@@ -86,13 +68,17 @@ def logout():                                                  #funzione per log
 
     return session
 
-def get_orders(user_id):                                       #funzione per recuperare prenotazioni dell'utente
+def get_orders(token_hash):                                       #funzione per recuperare prenotazioni dell'utente
     orders = []
     try:
         conn = connect_to_db()
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
-        cur.execute("SELECT * FROM reservation WHERE user_id = ?", (user_id,))
+
+        cur.execute("SELECT user_id FROM users WHERE token = ?", (token_hash,))
+        row = cur.fetchone()
+
+        cur.execute("SELECT * FROM reservation WHERE user_id = ?", (row[0],))
         rows = cur.fetchall()
 
         # convert row objects to dictionary
@@ -106,8 +92,6 @@ def get_orders(user_id):                                       #funzione per rec
             orders.append(order)
     except:
         orders = {}
-
-    conn.commit()
 
     return orders
         
@@ -133,6 +117,6 @@ def api_login():
 def api_logout():
     return jsonify(logout())
 
-@app.route('/api/users/orders/<user_id>', methods=['GET'])              #route a cui il client fa richiesta per recuperare prenotazioni
-def api_get_orders(user_id):
-    return jsonify(get_orders(user_id))
+@app.route('/api/users/orders/<token_hash>', methods=['GET'])              #route a cui il client fa richiesta per recuperare prenotazioni
+def api_get_orders(token_hash):
+    return jsonify(get_orders(token_hash))
