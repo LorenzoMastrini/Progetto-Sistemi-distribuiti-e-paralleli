@@ -4,6 +4,6 @@ export class Film {
     plot!: string;
     director!: string;
     genres?: string[];
-    imageUrl!: string;    
+    imgUrl!: string;    
     origins!: string[];
 }

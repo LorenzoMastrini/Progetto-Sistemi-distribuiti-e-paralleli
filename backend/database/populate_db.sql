@@ -1,6 +1,6 @@
-INSERT INTO film VALUES ("Interstellar", 140, "cuofdjsfnrsuifksb", "Christopher Nolan", NULL);
-INSERT INTO film VALUES ("Pulp Fiction", 125, "fdafeawr", "Quentin Tarantino", NULL);
-INSERT INTO film VALUES ("The VVitch", 120, "aiutoooooooo", "Robert Eggers", NULL);
+INSERT INTO film VALUES ("Interstellar", 140, "cuofdjsfnrsuifksb", "Christopher Nolan", "assets/film-1.jpg");
+INSERT INTO film VALUES ("Pulp Fiction", 125, "fdafeawr", "Quentin Tarantino", "assets/film-2.jpg");
+INSERT INTO film VALUES ("The VVitch", 120, "aiutoooooooo", "Robert Eggers", "assets/film-3.jpg");
 
 INSERT INTO schedule (movie_time, film) VALUES (datetime("2023-12-02 21:00"), "The VVitch");                  
 INSERT INTO schedule (movie_time, film) VALUES (datetime("2023-12-02 23:00"), "The VVitch");
