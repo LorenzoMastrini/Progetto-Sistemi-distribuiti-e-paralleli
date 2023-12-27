@@ -1,5 +1,4 @@
 import sqlite3
-import json
 from __main__ import app
 from database.init_db import connect_to_db
 from flask import jsonify, request
@@ -43,7 +42,8 @@ def get_film_schedule(film_name):                          #funzione per che int
             schedule_dic["id"] = i["id"]
             schedule_dic["movieTime"] = i["movie_time"]
             schedule_dic["film"] = i["film"]
-            schedule_dic["seats"] = i["seats_available"]
+            seats_string = str(i["seats_available"])
+            schedule_dic["seatsAvailable"] = seats_string.split(' ')
 
             schedule.append(schedule_dic)
     except: 
