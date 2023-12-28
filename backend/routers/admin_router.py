@@ -200,7 +200,8 @@ def get_schedules():                            #funzione per ritornare tutti gl
             schedule["scheduleId"] = i["id"]
             schedule["movieTime"] = i["movie_time"]
             schedule["film"] = i["film"]
-            schedule["seatsAvailable"] = i["seats_available"]
+            seats_string = str(i["seats_available"])
+            schedule["seatsAvailable"] = seats_string.split(' ')
 
             schedules.append(schedule)
     except:
