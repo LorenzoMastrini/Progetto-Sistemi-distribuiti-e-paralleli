@@ -24,7 +24,9 @@ export class FilmPageComponent implements OnInit {
   isSubmitted = false;
   maxBookableTickets: number[] = []; //si possono prenotare al massimo 10 biglietti (se almeno 10 posti sono disponibili)
   scheduleIndex!: number; //valore letto dall'html dinamicamente in base all'orario selezionato dall'utente (poi usato per verificare i posti disponibili)
-
+  radioButtonIsSelected: boolean = false;
+  bookedSeats: string[] | undefined;
+  
   constructor(activatedRoute:ActivatedRoute,
               filmService:FilmService,
               private orderService:OrderService,
@@ -51,15 +53,22 @@ export class FilmPageComponent implements OnInit {
     });
   }
 
+  getSeatsOfSpecificSchedule(): string[] | undefined {
+    let selectedTime: string = (document.querySelector('input[type=radio]:checked') as HTMLInputElement).id;
+    return this.schedules.find(schedule => schedule.movieTime == selectedTime)?.seatsAvailable;
+  }
+
   //funzione chiamata quando l'utente cambia l'orario del film tramite radio button
   checkAvailableSeats() {
+    this.radioButtonIsSelected = true;
+    this.bookedSeats = this.getSeatsOfSpecificSchedule();
     let selectedSchedule = this.schedules[this.scheduleIndex]; //orario selezionato tramite radio button
 
     //se i posti disponibili sono meno del massimo numero prenotabile, ne fa prenotare meno (cioè al massimo il numero di posti disponibili)
-    if(selectedSchedule.seatsAvailable < 10 ) {
+    if(selectedSchedule.seatsAvailable.length < 10 ) {
       this.maxBookableTickets = [];
 
-      for(let i = 1; i <= selectedSchedule.seatsAvailable; i++) {
+      for(let i = 1; i <= selectedSchedule.seatsAvailable.length; i++) {
         this.maxBookableTickets.push(i); //riempie l'array fino al massimo numero di posti disponibili
       }
     } else {
@@ -73,6 +82,13 @@ export class FilmPageComponent implements OnInit {
   }
 
   createOrder(nTickets: string) {
+    let bookedSeats = [];
+    let checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+
+    for(let i = 0; i < checkboxes.length; i++) {
+      bookedSeats.push((checkboxes[i] as HTMLInputElement).value);
+    }
+
     if(this.userService.currentUser.id == undefined) {
       this.router.navigateByUrl('/login');
       return; //serve essere autenticati per prenotare i posti
@@ -81,11 +97,18 @@ export class FilmPageComponent implements OnInit {
     //arrivo qua solo se l'utente ha effettuato il login
     const newOrder = new Order();
     newOrder["movieTime"] = this.schedules[this.scheduleIndex].movieTime;
-    newOrder["nSeats"] = parseInt(nTickets);
+    newOrder["seats"] = bookedSeats;
     newOrder["userId"] = parseInt(this.userService.currentUser.id);
     newOrder["totalPrice"] = this.totalPrice;
 
     this.orderService.createOrder(newOrder);
     this.router.navigateByUrl('/payment');
+  }
+
+  checkSeats(e: Event, nSelectedTicketsInString: string) {
+    if(document.querySelectorAll('input[type=checkbox]:checked').length > parseInt(nSelectedTicketsInString)) {
+      alert("Numero di posti massimo raggiunto");
+      (e.target as HTMLInputElement).checked = false;
+    }
   }
 }

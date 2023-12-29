@@ -47,9 +47,9 @@
                     <div class="select-schedule">
                         <p>Seleziona un orario:</p>
                         <div *ngFor="let schedule of schedules; let i = index">
-                            <label [for]="'radio-'+schedule.movieTime">
+                            <label [for]="schedule.movieTime">
                                 {{ schedule.movieTime }}
-                                <input (change)="checkAvailableSeats()" #radio [(ngModel)]="scheduleIndex" [id]="'radio-'+schedule.movieTime" type="radio" [value]='i' formControlName="movieTimeRadio"/>
+                                <input (change)="checkAvailableSeats()" #radio [(ngModel)]="scheduleIndex" [id]="schedule.movieTime" type="radio" [value]='i' formControlName="movieTimeRadio"/>
                             </label>
                         </div>
                     </div>
@@ -61,6 +61,20 @@
                                 {{ nTickets }}
                             </option>
                         </select>
+                    </div>
+
+                    <div class="select-seats">
+                        <p>Seleziona i posti:</p>
+                        <table *ngIf="radioButtonIsSelected">
+                            <tr *ngFor="let row of ['A', 'B', 'C', 'D', 'E', 'F','G', 'H','I', 'J']">
+                                <td *ngFor="let col of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
+                                    <input type="checkbox" (change)="checkSeats($event, quantitySelect.value)" [value]="row+col" *ngIf="bookedSeats!.includes(row+col); else bookedSeat"/>
+                                    <ng-template #bookedSeat>
+                                        <input type="checkbox" [value]="row+col" disabled/>
+                                    </ng-template>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </form>
         

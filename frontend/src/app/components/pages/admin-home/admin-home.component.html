@@ -43,31 +43,9 @@
                 {{ schedule.movieTime }}
             </td>
             <td>
-                {{ schedule.seatsAvailable }}
+                {{ schedule.seatsAvailable.length }}
             </td>
         </tr>
-<!--
-        <tr *ngFor="let film of films">
-            <td [rowSpan]="nSchedulesPerFilm.get(film.name)">
-                <img [src]="film.imageUrl"/>
-            </td>
-            <td [rowSpan]="nSchedulesPerFilm.get(film.name)">
-                {{ film.name }}
-            </td>
-
-            <ng-container *ngFor="let schedule of schedules">
-                <tr *ngIf="schedule.film == film.name">
-                    <td class="movie-time">
-                        {{ schedule.movieTime }}
-                    </td>
-
-                    <td class="movie-time">
-                        {{ schedule.seatsAvailable }}
-                    </td>
-                </tr>
-            </ng-container>
-        </tr>
-        -->
     </table>
 
     <div class="buttons-container">
