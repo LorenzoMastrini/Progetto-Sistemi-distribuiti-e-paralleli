@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Schedule } from '../shared/models/Schedule';
 import { HttpClient } from '@angular/common/http';
-import { ADMIN_ADD_FILM, ADMIN_ADD_SCHEDULE, ADMIN_CHANGE_ADMIN_STATUS, ADMIN_GET_ALL_ORDERS, ADMIN_GET_ALL_SCHEDULES, ADMIN_GET_ALL_USERS } from '../shared/constants/urls';
+import { ADMIN_ADD_FILM, ADMIN_ADD_SCHEDULE, ADMIN_CHANGE_ADMIN_STATUS, ADMIN_DELETE_SCHEDULE, ADMIN_GET_ALL_ORDERS, ADMIN_GET_ALL_SCHEDULES, ADMIN_GET_ALL_USERS } from '../shared/constants/urls';
 import { IAdminAddSchedule } from '../shared/interfaces/IAdminAddSchedule';
 import { Film } from '../shared/models/Film';
 import { IAdminAddFilm } from '../shared/interfaces/IAdminAddFilm';
@@ -38,5 +38,9 @@ export class AdminService {
 
   getAllOrders(): Observable<Order[]> {
     return this.http.get<Order[]>(ADMIN_GET_ALL_ORDERS);
+  }
+
+  deleteSchedule(scheduleId:string): Observable<Schedule[]>{
+    return this.http.delete<Schedule[]>(ADMIN_DELETE_SCHEDULE + scheduleId);
   }
 }

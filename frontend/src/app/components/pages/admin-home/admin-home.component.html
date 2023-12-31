@@ -45,6 +45,11 @@
             <td>
                 {{ schedule.seatsAvailable.length }}
             </td>
+            <td *ngIf="schedule.seatsAvailable.length == 100">
+                <button (click)="deleteSchedule(schedule.scheduleId)" class="delete-schedule">
+                    Elimina oraraio
+                </button>
+            </td>
         </tr>
     </table>
 
@@ -52,5 +57,5 @@
         <default-button class="add-film-button" routerLink="/admin/add-film" text="Aggiungi film"></default-button>
     </div>
 
-    <app-admin-add-schedule></app-admin-add-schedule>
+    <app-admin-add-schedule class="add-schedule"></app-admin-add-schedule>
 </div>

@@ -22,3 +22,18 @@ td img {
     object-fit: cover;
     border-radius: 100rem;
 }
+
+.add-schedule {
+    justify-content: center;
+    display: flex;
+}
+
+.delete-schedule {
+    color: black;
+    font-size: 20px;
+    background-color: white;
+    border-radius: 1rem;
+    width: 10rem;
+    height: 2rem;
+    border: none;
+}

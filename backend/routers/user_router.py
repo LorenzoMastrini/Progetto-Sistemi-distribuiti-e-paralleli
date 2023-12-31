@@ -78,7 +78,7 @@ def get_orders(token_hash):                                       #funzione per 
         cur.execute("SELECT user_id FROM users WHERE token = ?", (token_hash,))
         row = cur.fetchone()
 
-        cur.execute("SELECT * FROM reservation WHERE user_id = ?", (row[0],))
+        cur.execute("SELECT reservation.id, user_id, schedule.film, reservation.movie_time, reservation.n_seats FROM reservation, schedule WHERE user_id = ? AND reservation.movie_time = schedule.movie_time", (row[0],))
         rows = cur.fetchall()
 
         # convert row objects to dictionary
@@ -87,7 +87,8 @@ def get_orders(token_hash):                                       #funzione per 
             order["id"] = i["id"]
             order["userId"] = i["user_id"]
             order["movieTime"] = i["movie_time"]
-            order["nSeats"] = i["n_seats"]
+            order["seats"] = i["n_seats"]
+            order["film"] = i["film"]
 
             orders.append(order)
     except:

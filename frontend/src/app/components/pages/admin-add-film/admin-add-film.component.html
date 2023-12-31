@@ -1,35 +1,37 @@
-<div class="container">
-    <app-title title="Aggiungi film"></app-title>
+<div class="add-film">
+    <div class="container">
+        <app-title title="Aggiungi film"></app-title>
 
-    <form [formGroup]="addFilmForm" (ngSubmit)="submit()">
-        <text-input
-            [control]="fc.name"
-            [showErrorsWhen]="isSubmitted"
-            type="text"
-            label="Nome">
-        </text-input>
+        <form [formGroup]="addFilmForm" (ngSubmit)="submit()">
+            <text-input
+                [control]="fc.name"
+                [showErrorsWhen]="isSubmitted"
+                type="text"
+                label="Nome">
+            </text-input>
 
-        <text-input
-            [control]="fc.duration"
-            [showErrorsWhen]="isSubmitted"
-            type="text"
-            label="Durata">
-        </text-input>
+            <text-input
+                [control]="fc.duration"
+                [showErrorsWhen]="isSubmitted"
+                type="text"
+                label="Durata">
+            </text-input>
 
-        <text-input
-            [control]="fc.plot"
-            [showErrorsWhen]="isSubmitted"
-            type="text"
-            label="Trama">
-        </text-input>
+            <text-input
+                [control]="fc.plot"
+                [showErrorsWhen]="isSubmitted"
+                type="text"
+                label="Trama">
+            </text-input>
 
-        <text-input
-            [control]="fc.director"
-            [showErrorsWhen]="isSubmitted"
-            type="text"
-            label="Regista">
-        </text-input>
+            <text-input
+                [control]="fc.director"
+                [showErrorsWhen]="isSubmitted"
+                type="text"
+                label="Regista">
+            </text-input>
 
-        <default-button text="Aggiungi film"></default-button>
-    </form>
+            <default-button text="Aggiungi film"></default-button>
+        </form>
+    </div>
 </div>

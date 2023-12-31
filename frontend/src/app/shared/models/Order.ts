@@ -1,7 +1,8 @@
 export class Order {
-    id!: number;
+    orderId!: number;
     movieTime!: string;
     userId!: number;
     seats!: string[];
     totalPrice!: number;
+    email!:string;
 }
