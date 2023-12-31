@@ -8,6 +8,12 @@
 .film {
     display: flex;
     flex-direction: row;
+    width: 90%;
+}
+
+img {
+    width: 400px;
+    height: 620px;
 }
 
 .info {
@@ -15,22 +21,34 @@
     display: flex;
     flex-direction: column;
     flex: 1 0;
-    padding: 2rem;
     color: white;
     justify-content: right;
     align-items: left;
     justify-content: space-between;
+    margin-left: 15rem;
 }
 
-.name{
+.film-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
     font-size: 3rem;
     font-weight: bold;
+    margin-bottom: 2rem;
 }
 
 .origins, .director {
     display: flex;
     flex-wrap: wrap;
     margin: 0.5rem 0;
+}
+
+.plot {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 1rem;
 }
 
 .booking {
@@ -47,6 +65,10 @@
 .price-per-ticket::before {
     content: "Prezzo: ";
     color: darkgrey;
+}
+
+.select-schedule, .select-tickets {
+    margin: 1rem 0;
 }
 
 .select-tickets {
@@ -67,6 +89,22 @@ select {
     border-radius: 0.3rem;
     color: black;
     cursor: pointer;
+}
+
+.complete-order {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.select-seats {
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    border-top: 1px solid white;
+    padding-top: 3rem;
 }
 
 .total-price {
