@@ -79,9 +79,7 @@ img {
 
 select {
     appearance: none;
-    /* safari */
     -webkit-appearance: none;
-    /* other styles for aesthetics */
     font-size: 1.15rem;
     padding: 0.3rem 1rem 0.3rem 1rem;
     background-color: #fff;

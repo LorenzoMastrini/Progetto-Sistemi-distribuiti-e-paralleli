@@ -11,6 +11,8 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./payment-page.component.css']
 })
 
+//le informazioni inserite in questa pagina in realtà sono inutili perché che non vengono inviate al backend
+//tuttavia è questa pagina che conferma l'invio dell'ordine al server
 export class PaymentPageComponent implements OnInit {
   paymentForm!: FormGroup;
   totalPrice!: number;
@@ -50,12 +52,13 @@ export class PaymentPageComponent implements OnInit {
 
     if(this.userService.currentUser.id == undefined) {
       this.router.navigateByUrl('/login');
-      return; //serve essere autenticati per prenotare i posti
+      return; //serve essere autenticati per confermare il pagamento
     }
 
+    //creazione del nuovo ordine
     this.orderService.reserve().subscribe(() => {
       //redirige l'utente alla pagina degli ordini
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/users/orders/' + this.userService.currentUser.token);
     });
   }
 }

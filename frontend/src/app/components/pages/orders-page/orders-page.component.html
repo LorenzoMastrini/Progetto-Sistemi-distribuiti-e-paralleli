@@ -4,17 +4,35 @@
 </app-not-found>
 
 <div *ngIf="orders" class="container">
-    <ul>
-        <li *ngFor="let order of orders">
-            <div class="info">
-                <p class="movie-time">
-                    {{ order.movieTime }}
-                </p>
+    <!--
+    <div class="order-info">
+        {{ order.userId }}
+        {{ order.movieTime }}
+        {{ order.seats }}
+    </div>
+    -->
+    <table class="schedules-list">
+        <tr>
+            <td colspan="2">
+                <h3>I tuoi ordini:</h3>
+            </td>
+        </tr>
 
-                <p class="n-seats">
-                    {{ order.seats }}
-                </p>
-            </div>
-        </li>
-    </ul>
-    
+        <tr>
+            <td>
+                <h4>Orario</h4>
+            </td>
+            <td>
+                <h4>Posti prenotati</h4>
+            </td>
+        </tr>
+
+        <tr *ngFor="let order of orders">
+            <td>
+                {{ order.movieTime }}
+            </td>
+            <td>
+                {{ order.seats }}
+            </td>
+        </tr>
+    </table>
