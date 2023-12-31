@@ -8,35 +8,37 @@
         <img [src]="film.imgUrl" [alt]="film.name"/>
 
         <div class="info">
-            <span class="name">
-                {{ film.name }}
-            </span>
+            <div class="film-info">
+                <span class="name">
+                    {{ film.name }}
+                </span>
 
-            <span class="duration">
-                <strong>Durata: </strong>{{ film.duration }} min
-            </span>
-            <!--
-            <div class="genres">
-                <p *ngFor="let genre of film.genres">
-                    {{ genre }}
-                </p>
-            </div>
-            -->
-            <div class="director">
-                <span>
-                    <strong>Regista: </strong>{{ film.director }}
+                <span class="duration">
+                    <strong>Durata: </strong>{{ film.duration }} min
+                </span>
+                <!--
+                <div class="genres">
+                    <p *ngFor="let genre of film.genres">
+                        {{ genre }}
+                    </p>
+                </div>
+                -->
+                <div class="director">
+                    <span>
+                        <strong>Regista: </strong>{{ film.director }}
+                    </span>
+                </div>
+                <!--
+                <div class="origins">
+                    <span *ngFor="let origin of film.origins">
+                        <strong>Paese di produzione: </strong> {{ origin }}
+                    </span>
+                </div>
+                -->
+                <span class="plot">
+                    {{ film.plot }}
                 </span>
             </div>
-            <!--
-            <div class="origins">
-                <span *ngFor="let origin of film.origins">
-                    <strong>Paese di produzione: </strong> {{ origin }}
-                </span>
-            </div>
-            -->
-            <span class="plot">
-                {{ film.plot }}
-            </span>
 
             <div class="booking">
                 <span class="price-per-ticket">
@@ -45,7 +47,7 @@
                     
                 <form [formGroup]="bookingForm">
                     <div class="select-schedule">
-                        <p>Seleziona un orario:</p>
+                        <p><strong>Seleziona un orario:</strong></p>
                         <div *ngFor="let schedule of schedules; let i = index">
                             <label [for]="schedule.movieTime">
                                 {{ schedule.movieTime }}
@@ -55,7 +57,7 @@
                     </div>
         
                     <div class="select-tickets">
-                        <p>Seleziona il numero di biglietti:&nbsp;&nbsp;</p>
+                        <p><strong>Seleziona il numero di biglietti:&nbsp;&nbsp;</strong></p>
                         <select #quantitySelect (change)="changeNumberOfTickets(quantitySelect.value)" formControlName="nTickets">
                             <option *ngFor="let nTickets of maxBookableTickets" [value]="nTickets">
                                 {{ nTickets }}
@@ -63,29 +65,35 @@
                         </select>
                     </div>
 
-                    <div class="select-seats">
-                        <p>Seleziona i posti:</p>
-                        <table *ngIf="radioButtonIsSelected">
-                            <tr *ngFor="let row of ['A', 'B', 'C', 'D', 'E', 'F','G', 'H','I', 'J']">
-                                <td *ngFor="let col of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
-                                    <input type="checkbox" (change)="checkSeats($event, quantitySelect.value)" [value]="row+col" *ngIf="bookedSeats!.includes(row+col); else bookedSeat"/>
-                                    <ng-template #bookedSeat>
-                                        <input type="checkbox" [value]="row+col" disabled/>
-                                    </ng-template>
-                                </td>
-                            </tr>
-                        </table>
+                    <div class="complete-order" *ngIf="radioButtonIsSelected">
+                        <p><strong>Seleziona i posti:</strong></p>
+                        <div class="select-seats">
+                            <table>
+                                <tr *ngFor="let row of ['A', 'B', 'C', 'D', 'E', 'F','G', 'H','I', 'J']">
+                                    <td *ngFor="let col of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
+                                        <input type="checkbox" (change)="checkSeats($event, quantitySelect.value)" [value]="row+col" *ngIf="bookedSeats!.includes(row+col); else bookedSeat"/>
+                                        <ng-template #bookedSeat>
+                                            <input type="checkbox" [value]="row+col" disabled/>
+                                        </ng-template>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <span class="total-price">
+                            {{ totalPrice | currency }}
+                        </span>
+
+                        <div class="button-container">
+                            <button (click)="createOrder(quantitySelect.value)">Prenota</button>
+                        </div>
                     </div>
                 </form>
         
-                <span class="total-price">
-                    {{ totalPrice | currency }}
-                </span>
+                
             </div>
         
-            <div class="button-container">
-                <button (click)="createOrder(quantitySelect.value)">Prenota</button>
-            </div>
+            
         </div>
     </div>
 </div>

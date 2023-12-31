@@ -81,9 +81,21 @@ export class FilmPageComponent implements OnInit {
     this.totalPrice = FILMS_PRICE_PER_TICKET * nTickets;
   }
 
+  checkSeats(e: Event, nSelectedTicketsInString: string) {
+    if(document.querySelectorAll('input[type=checkbox]:checked').length > parseInt(nSelectedTicketsInString)) {
+      alert("Numero di posti massimo raggiunto");
+      (e.target as HTMLInputElement).checked = false;
+    }
+  }
+
   createOrder(nTickets: string) {
     let bookedSeats = [];
     let checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+
+    if(parseInt(nTickets) !== checkboxes.length) {
+      alert("Il numero di biglietti scelto e i posti selezionati non corrispondono");
+      return;
+    }
 
     for(let i = 0; i < checkboxes.length; i++) {
       bookedSeats.push((checkboxes[i] as HTMLInputElement).value);
@@ -103,12 +115,5 @@ export class FilmPageComponent implements OnInit {
 
     this.orderService.createOrder(newOrder);
     this.router.navigateByUrl('/payment');
-  }
-
-  checkSeats(e: Event, nSelectedTicketsInString: string) {
-    if(document.querySelectorAll('input[type=checkbox]:checked').length > parseInt(nSelectedTicketsInString)) {
-      alert("Numero di posti massimo raggiunto");
-      (e.target as HTMLInputElement).checked = false;
-    }
   }
 }
