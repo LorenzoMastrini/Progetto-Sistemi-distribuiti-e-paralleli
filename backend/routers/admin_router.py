@@ -215,7 +215,7 @@ def get_all_orders():
         conn = connect_to_db()
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
-        cur.execute("SELECT * FROM reservation")
+        cur.execute("SELECT id, movie_time, reservation.user_id, n_seats, email FROM reservation, users WHERE reservation.user_id = users.user_id")
         rows = cur.fetchall()
 
         # convert row objects to dictionary
@@ -224,7 +224,8 @@ def get_all_orders():
             order["orderId"] = i["id"]
             order["movieTime"] = i["movie_time"]
             order["userId"] = i["user_id"]
-            order["nSeats"] = i["n_seats"]
+            order["seats"] = i["n_seats"]
+            order["email"] = i["email"]
 
             orders.append(order)
     except:

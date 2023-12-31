@@ -8,7 +8,8 @@ CREATE TABLE film (
     duration INTEGER NOT NULL,
     plot VARCHAR(512) NOT NULL,
     director VARCHAR(255) NOT NULL,
-    img_url TEXT
+    img_url TEXT,
+    genre TEXT
 );
 
 CREATE TABLE schedule (
