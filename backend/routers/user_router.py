@@ -88,10 +88,7 @@ def get_orders(token_hash):                                       #funzione per 
             order["userId"] = i["user_id"]
             order["movieTime"] = i["movie_time"]
             order["seats"] = i["n_seats"]
-<<<<<<< HEAD
-=======
             order["film"] = i["film"]
->>>>>>> e036d934a707ebfa0879bda4ff9fd2608f803198
 
             orders.append(order)
     except:

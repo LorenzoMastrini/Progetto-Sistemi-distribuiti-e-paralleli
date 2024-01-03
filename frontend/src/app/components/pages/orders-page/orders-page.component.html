@@ -4,21 +4,17 @@
 </app-not-found>
 
 <div *ngIf="orders" class="container">
-    <!--
-    <div class="order-info">
-        {{ order.userId }}
-        {{ order.movieTime }}
-        {{ order.seats }}
-    </div>
-    -->
     <table class="schedules-list">
         <tr>
-            <td colspan="2">
+            <td colspan="3">
                 <h3>I tuoi ordini:</h3>
             </td>
         </tr>
 
         <tr>
+            <td>
+                <h4>Film</h4>
+            </td>
             <td>
                 <h4>Orario</h4>
             </td>
@@ -28,6 +24,9 @@
         </tr>
 
         <tr *ngFor="let order of orders">
+            <td>
+                {{ order.film }}
+            </td>
             <td>
                 {{ order.movieTime }}
             </td>
