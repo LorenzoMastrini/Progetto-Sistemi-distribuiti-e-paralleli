@@ -21,7 +21,7 @@ def get_films():                                            #funzione che interr
             film["plot"] = i["plot"]
             film["director"] = i["director"]
             film["imgUrl"] = i["img_url"]
-            film["genre"] = i["genre"]
+            film["genres"] = i["genre"]
  
             films.append(film)
     except:
@@ -66,7 +66,7 @@ def get_film_by_name(film_name):                          #funzione per che inte
         film["plot"] = row["plot"]
         film["director"] = row["director"]
         film["imgUrl"] = row["img_url"]
-        film["genre"] = row["genre"]
+        film["genres"] = row["genre"]
     except: 
         film = {}
     

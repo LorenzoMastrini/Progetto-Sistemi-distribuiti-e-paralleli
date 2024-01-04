@@ -42,7 +42,7 @@ export class InputValidationComponent implements OnInit, OnChanges {
     
     if(!errors) { //non ci sono errori
       this.errorMessages = [];
-      return
+      return;
     }
 
     const errorKeys = Object.keys(errors); //ritorna un array di chiavi per ogni errore, per mapparle con le rispettive stringhe da mostrare

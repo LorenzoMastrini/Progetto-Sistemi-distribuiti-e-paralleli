@@ -43,16 +43,16 @@ export class PaymentPageComponent implements OnInit {
   }
 
   bookTickets() {
+    if(this.userService.currentUser.id == undefined) {
+      this.router.navigateByUrl('/login');
+      return; //serve essere autenticati per confermare il pagamento
+    }
+    
     this.isSubmitted = true;
 
     if(this.paymentForm.invalid) {
       this.toastrService.warning("Si prega di compilare i campi obbligatori.", "Input non validi");
       return;
-    }
-
-    if(this.userService.currentUser.id == undefined) {
-      this.router.navigateByUrl('/login');
-      return; //serve essere autenticati per confermare il pagamento
     }
 
     //creazione del nuovo ordine

@@ -35,7 +35,6 @@ export class OrderService {
   }
 
   reserve(): Observable<Order> {
-    console.log(this.order);
     return this.http.post<Order>(BOOK_TICKETS_URL, this.order);
   }
 

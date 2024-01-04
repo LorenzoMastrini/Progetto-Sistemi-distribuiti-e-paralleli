@@ -14,7 +14,9 @@ export class AdminAddFilmComponent {
   addFilmForm!: FormGroup; //form per inviare i dati
   isSubmitted = false; //per indicare se l'utente ha premuto o meno il pulsante per il submit, per non mostrare subito gli errori di validazione dei dati
 
-  constructor(private formBuilder:FormBuilder, private adminService:AdminService, private router:Router) { }
+  constructor(private formBuilder:FormBuilder,
+              private adminService:AdminService,
+              private router:Router) { }
 
   ngOnInit(): void {
     //tramite formBuilder creo il form group per i vari campi che l'utente dovrà compilare
@@ -47,10 +49,10 @@ export class AdminAddFilmComponent {
                                 director: this.fc.director.value
     }).subscribe((serverNewFilm) => {
       //NON LO TORNA NON SO COME MAI (forse non necessario)
-      let prova: Film = serverNewFilm;
-      console.log(prova);
+      //let prova: Film = serverNewFilm;
+      //console.log(prova);
     });
 
-    this.router.navigateByUrl("/admin");
+    this.router.navigateByUrl("/admin"); //torna alla home dell'admin
   }
 }

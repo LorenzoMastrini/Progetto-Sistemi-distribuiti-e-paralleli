@@ -16,7 +16,9 @@ export class AdminHomeComponent {
   films: Film[] = [];
   schedules: Schedule[] = [];
 
-  constructor(filmService: FilmService, activatedRoute: ActivatedRoute, private adminService:AdminService) {
+  constructor(filmService: FilmService,
+              activatedRoute: ActivatedRoute,
+              private adminService:AdminService) {
     let filmsObservable: Observable<Film[]>; //per ottere gli observable di tutti i metodi chiamati che si connettono al backend, poi facendo subscribe per ottere i film
     //altrimenti dovrei fare subscribe per ognuno dei metodi chiamati separatamente
     
@@ -44,7 +46,7 @@ export class AdminHomeComponent {
 
   deleteSchedule(scheduleId:string){
     this.adminService.deleteSchedule(scheduleId).subscribe(() => {
-      window.location.reload();
+      window.location.reload(); //refresh della pagina per mostrare le informazioni aggiornate
     });
   }
 }

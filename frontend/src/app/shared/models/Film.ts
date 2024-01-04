@@ -3,7 +3,7 @@ export class Film {
     duration!: string;
     plot!: string;
     director!: string;
-    genres?: string[];
+    genres?: string;
     imgUrl!: string;    
     origins!: string[];
 }

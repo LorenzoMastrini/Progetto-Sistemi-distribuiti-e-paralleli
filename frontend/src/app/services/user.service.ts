@@ -20,12 +20,35 @@ export class UserService {
   //non voglio che le informazioni dell'utente siano modificabili da altri se non lo UserService, quindi creo l'Observable
   public userObservable: Observable<User>; //voglio esporre i dati dell'utente al di fuori di UserService
 
-  constructor(private http:HttpClient, private toastrService:ToastrService, private router:Router) {
+  constructor(private http:HttpClient,
+              private toastrService:ToastrService,
+              private router:Router) {
     this.userObservable = this.userSubject.asObservable(); //versione read only di userSubject, da esporre fuori dallo UserService
   }
 
   public get currentUser(): User {
     return this.userSubject.value; //ultimo valore dello userSubject
+  }
+
+  logout() {
+    this.userSubject.next(new User());
+    localStorage.removeItem(USER_KEY);
+    this.router.navigateByUrl('/');
+    window.location.reload(); //refresh della pagina
+  }
+
+  //uso localStorage per salvare l'utente così da non dover rifare il login dopo un refresh della pagina (come cart-page)
+  private setUserToLocalStorage(user:User) {
+    localStorage.setItem(USER_KEY, JSON.stringify(user)); //converto l'utente in JSON
+  }
+
+  private getUserFromLocalStorage(): User {
+    const userJson = localStorage.getItem(USER_KEY);
+    if(userJson) {
+      return JSON.parse(userJson) as User;
+    } else {
+      return new User();
+    }
   }
 
   login(userLogin:IUserLogin): Observable<User> {
@@ -61,26 +84,5 @@ export class UserService {
         this.toastrService.error(errorResponse.error, 'Registrazione fallita');
       }
     }));
-  }
-
-  logout() {
-    this.userSubject.next(new User());
-    localStorage.removeItem(USER_KEY);
-    this.router.navigateByUrl('/');
-    window.location.reload(); //refresh della pagina
-  }
-
-  //uso localStorage per salvare l'utente così da non dover rifare il login dopo un refresh della pagina (come cart-page)
-  private setUserToLocalStorage(user:User) {
-    localStorage.setItem(USER_KEY, JSON.stringify(user)); //converto l'utente in JSON
-  }
-
-  private getUserFromLocalStorage(): User {
-    const userJson = localStorage.getItem(USER_KEY);
-    if(userJson) {
-      return JSON.parse(userJson) as User;
-    } else {
-      return new User();
-    }
   }
 }
