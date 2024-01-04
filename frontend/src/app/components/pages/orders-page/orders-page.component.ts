@@ -19,9 +19,8 @@ export class OrdersPageComponent {
     //ogni volta che 'params' cambia, chiama la funzione dentro 'subscribe()'
     activatedRoute.params.subscribe((params) => {
       orderService.getAllOrders(params.userToken).subscribe((serverOrders) => {
-        this.orders = serverOrders;
-        console.log(params.userToken);
-      }); //se non è stato cercato nulla mostra tutto per default
+        this.orders = serverOrders; //riceve tutti gli ordini effettuati da un utente
+      });
     });
   }
 }

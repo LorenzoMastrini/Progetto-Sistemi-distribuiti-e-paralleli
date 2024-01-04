@@ -45,7 +45,7 @@
                     {{ pricePerTicket | currency }}
                 </span>
                     
-                <form [formGroup]="bookingForm">
+                <form [formGroup]="bookingForm" (ngSubmit)="createOrder(quantitySelect.value)">
                     <div class="select-schedule">
                         <p><strong>Seleziona un orario:</strong></p>
                         <div *ngFor="let schedule of schedules; let i = index">
@@ -71,7 +71,7 @@
                             <table>
                                 <tr *ngFor="let row of ['A', 'B', 'C', 'D', 'E', 'F','G', 'H','I', 'J']">
                                     <td *ngFor="let col of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
-                                        <input type="checkbox" (change)="checkSeats($event, quantitySelect.value)" [value]="row+col" *ngIf="bookedSeats!.includes(row+col); else bookedSeat"/>
+                                        <input type="checkbox" (change)="checkSeats($event, quantitySelect.value)" [value]="row+col" *ngIf="availableSeats!.includes(row+col); else bookedSeat"/>
                                         <ng-template #bookedSeat>
                                             <input type="checkbox" [value]="row+col" disabled/>
                                         </ng-template>
@@ -85,15 +85,11 @@
                         </span>
 
                         <div class="button-container">
-                            <button (click)="createOrder(quantitySelect.value)">Prenota</button>
+                            <button>Prenota</button>
                         </div>
                     </div>
                 </form>
-        
-                
             </div>
-        
-            
         </div>
     </div>
 </div>

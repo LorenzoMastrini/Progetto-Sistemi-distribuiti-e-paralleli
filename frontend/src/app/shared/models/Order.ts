@@ -5,4 +5,5 @@ export class Order {
     seats!: string[];
     totalPrice!: number;
     email!:string;
+    film!: string;
 }
