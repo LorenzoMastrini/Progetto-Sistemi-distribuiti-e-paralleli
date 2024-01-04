@@ -66,7 +66,7 @@ def get_film_by_name(film_name):                          #funzione per che inte
         film["plot"] = row["plot"]
         film["director"] = row["director"]
         film["imgUrl"] = row["img_url"]
-        film["genre"] = film["genre"]
+        film["genre"] = row["genre"]
     except: 
         film = {}
     
