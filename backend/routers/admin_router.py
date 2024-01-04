@@ -79,7 +79,7 @@ def add_film(film_info):                         #funzione per aggiungere film a
         if row is not None:
             return 400
 
-        cur.execute("INSERT INTO film (name, duration, plot, director) VALUES (?, ?, ?, ?)", (film_info["name"], film_info["duration"], film_info["plot"], film_info["director"]))
+        cur.execute("INSERT INTO film (name, duration, plot, director, img_url, genre) VALUES (?, ?, ?, ?, ?, ?)", (film_info["name"], film_info["duration"], film_info["plot"], film_info["director"], film_info["imgUrl"], film_info["genres"]))
         conn.commit()
 
         return inserted_film
