@@ -18,11 +18,11 @@ export class FilmService {
     return this.http.get<Film[]>(FILMS_URL);
   }
 
-  getFilmByName(filmName: string): Observable<Film> {
+  getFilmByName(filmName:string): Observable<Film> {
     return this.http.get<Film>(FILMS_BY_NAME_URL + filmName);
   }
 
-  getFilmSchedule(filmName: string): Observable<Schedule[]> {
+  getFilmSchedule(filmName:string): Observable<Schedule[]> {
     return this.http.get<Schedule[]>(SCHEDULE_FILM_URL + filmName);
   }
 }

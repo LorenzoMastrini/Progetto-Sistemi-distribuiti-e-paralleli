@@ -16,15 +16,14 @@ import { Schedule } from 'src/app/shared/models/Schedule';
 })
 
 export class FilmPageComponent implements OnInit {
-  pricePerTicket = FILMS_PRICE_PER_TICKET;
   film!: Film;
   schedules!: Schedule[]; //lista degli orari disponibili per il film selezionato
   totalPrice!: number; //prezzo per ogni biglietto, poi moltiplicato per il numero di biglietti prenotati
   bookingForm!: FormGroup;
   isSubmitted = false;
   maxBookableTickets: number[] = []; //si possono prenotare al massimo 10 biglietti (se almeno 10 posti sono disponibili)
-  scheduleIndex!: number; //valore letto dall'html dinamicamente in base all'orario selezionato dall'utente (poi usato per verificare i posti disponibili)
-  radioButtonIsSelected: boolean = false; //informazione usata per aggiornare dinamicamente il template html con la parte dedicata alla prenotazione
+  scheduleIndex!: number; //valore letto dall'HTML dinamicamente in base all'orario selezionato dall'utente (poi usato per verificare i posti disponibili)
+  radioButtonIsSelected: boolean = false; //per aggiornare dinamicamente il template HTML con la parte dedicata alla prenotazione
   availableSeats: string[] | undefined;
   
   constructor(activatedRoute:ActivatedRoute,
@@ -34,7 +33,7 @@ export class FilmPageComponent implements OnInit {
               private formBuilder:FormBuilder,
               private userService:UserService) {
     activatedRoute.params.subscribe((params) => {
-      if(params.name) { //parametro perso dall'url (.../fim/nomeFilm)
+      if(params.name) { //parametro preso dall'url (.../fim/nomeFilm)
         filmService.getFilmByName(params.name).subscribe(serverFilm => {
           this.film = serverFilm;
 
@@ -94,6 +93,13 @@ export class FilmPageComponent implements OnInit {
   }
 
   createOrder(nTickets: string) {
+    //serve essere autenticati per prenotare i posti
+    if(this.userService.currentUser.id == undefined) {
+      this.router.navigateByUrl('/login');
+      return;
+    }
+
+    //arrivo qua solo se l'utente ha effettuato il login
     let bookedSeats = []; //variabile per salvare i posti che l'utente ha scelto
     let checkboxes = document.querySelectorAll('input[type=checkbox]:checked'); //lista delle checkbox corrispondenti ai posti scelti
 
@@ -107,13 +113,6 @@ export class FilmPageComponent implements OnInit {
       bookedSeats.push((checkboxes[i] as HTMLInputElement).value);
     }
 
-    //serve essere autenticati per prenotare i posti
-    if(this.userService.currentUser.id == undefined) {
-      this.router.navigateByUrl('/login');
-      return;
-    }
-
-    //arrivo qua solo se l'utente ha effettuato il login
     const newOrder = new Order();
     newOrder["movieTime"] = this.schedules[this.scheduleIndex].movieTime;
     newOrder["seats"] = bookedSeats;
@@ -122,5 +121,9 @@ export class FilmPageComponent implements OnInit {
 
     this.orderService.createOrder(newOrder);
     this.router.navigateByUrl('/payment');
+  }
+
+  get pricePerTicket() {
+    return FILMS_PRICE_PER_TICKET; //deve essere letto nell'HTML, non fattibile con la costante importata dal file constants.ts
   }
 }

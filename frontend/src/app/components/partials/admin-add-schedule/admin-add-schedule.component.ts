@@ -8,11 +8,13 @@ import { Schedule } from 'src/app/shared/models/Schedule';
   templateUrl: './admin-add-schedule.component.html',
   styleUrls: ['./admin-add-schedule.component.css']
 })
+
 export class AdminAddScheduleComponent {
   addScheduleForm!: FormGroup; //form per inviare i dati
   isSubmitted = false; //per indicare se l'utente ha premuto o meno il pulsante per il submit, per non mostrare subito gli errori di validazione dei dati
 
-  constructor(private formBuilder:FormBuilder, private adminService:AdminService) { }
+  constructor(private formBuilder:FormBuilder,
+              private adminService:AdminService) { }
 
   ngOnInit(): void {
     //tramite formBuilder creo il form group per i vari campi che l'utente dovrà compilare
@@ -31,14 +33,13 @@ export class AdminAddScheduleComponent {
 
   submit() {
     this.isSubmitted = true;
-    console.log("ciao");
     if(this.addScheduleForm.invalid) {
       return; //torna se il form non è valido
     }
 
     this.adminService.addSchedule({film: this.fc.scheduleFilm.value, movieTime: this.fc.scheduleTime.value}).subscribe((serverNewSchedule) => {
-      let prova: Schedule = serverNewSchedule;
-      console.log(prova);
+      //let prova: Schedule = serverNewSchedule;
+      //console.log(prova);
     });
 
     window.location.reload();

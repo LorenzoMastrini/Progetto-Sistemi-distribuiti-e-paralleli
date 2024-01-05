@@ -1,61 +1,64 @@
 <div class="container">
-    <!--
-    <div class="film">
-        <div *ngFor="let film of films">
-            {{ film.name }}
-            <div class="movie-schedule-info" *ngFor="let schedule of schedules">
-                <div *ngIf="schedule.film == film.name">
+    <div class="schedules-container">
+        <table>
+            <tr>
+                <td colspan="3">
+                    <h3>Programmazione completa:</h3>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="1">
+                    <h4>Film</h4>
+                </td>
+                <td colspan="1">
+                    <h4>Orari</h4>
+                </td>
+                <td colspan="1">
+                    <h4>Posti disponibili</h4>
+                </td>
+            </tr>
+
+            <tr *ngFor="let schedule of schedules">
+                <td>
+                    {{ schedule.film }}
+                </td>
+                <td>
                     {{ schedule.movieTime }}
-                    {{ schedule.seatsAvailable }}
+                </td>
+                <td>
+                    {{ schedule.seatsAvailable.length }}
+                </td>
+                <td>
+                    <button (click)="deleteSchedule(schedule.scheduleId)" class="delete-schedule">
+                        Elimina orario
+                    </button>
+                </td>
+            </tr>
+        </table>
+        <app-admin-add-schedule class="add-schedule"></app-admin-add-schedule>
+    </div>
+
+    <div class="movies-container">
+        <h3>Film:</h3>
+        <div class="films-grid-container">
+            <div class="film" *ngFor="let film of films">
+                <img [src]="film.imgUrl"/>
+
+                <div class="name">
+                    <span>
+                        {{film.name}}
+                    </span>
                 </div>
+                
+                <button (click)="deleteFilm(film.name)" class="delete-film">
+                    Elimina Film
+                </button>
             </div>
         </div>
+
+        <div class="buttons-container">
+            <default-button class="add-film-button" routerLink="/admin/add-film" text="Aggiungi film"></default-button>
+        </div>
     </div>
-    -->
-    
-
-
-
-    <table class="schedules-list">
-        <tr>
-            <td colspan="3">
-                <h3>Programmazione completa:</h3>
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="1">
-                <h4>Film</h4>
-            </td>
-            <td colspan="1">
-                <h4>Orari</h4>
-            </td>
-            <td colspan="1">
-                <h4>Posti disponibili</h4>
-            </td>
-        </tr>
-
-        <tr *ngFor="let schedule of schedules">
-            <td>
-                {{ schedule.film }}
-            </td>
-            <td>
-                {{ schedule.movieTime }}
-            </td>
-            <td>
-                {{ schedule.seatsAvailable.length }}
-            </td>
-            <td *ngIf="schedule.seatsAvailable.length == 100">
-                <button (click)="deleteSchedule(schedule.scheduleId)" class="delete-schedule">
-                    Elimina oraraio
-                </button>
-            </td>
-        </tr>
-    </table>
-
-    <div class="buttons-container">
-        <default-button class="add-film-button" routerLink="/admin/add-film" text="Aggiungi film"></default-button>
-    </div>
-
-    <app-admin-add-schedule class="add-schedule"></app-admin-add-schedule>
 </div>

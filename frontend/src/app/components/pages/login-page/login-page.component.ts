@@ -14,8 +14,10 @@ export class LoginPageComponent implements OnInit {
   isSubmitted = false; //per indicare se l'utente ha premuto o meno il pulsante per il submit, per non mostrare subito gli errori di validazione dei dati
   returnUrl = ''; //fa tornare l'utente alla pagina dove si trovava prima del login
 
-  constructor(private formBuilder:FormBuilder, private userService:UserService,
-    private activatedRoute:ActivatedRoute, private router:Router) { }
+  constructor(private formBuilder:FormBuilder,
+              private userService:UserService,
+              private activatedRoute:ActivatedRoute,
+              private router:Router) { }
 
   ngOnInit(): void {
     //tramite formBuilder creo il form group per i vari campi che l'utente dovrà compilare

@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { FilmService } from 'src/app/services/film.service';
 import { OrderService } from 'src/app/services/order.service';
-import { UserService } from 'src/app/services/user.service';
 import { Order } from 'src/app/shared/models/Order';
 
 @Component({
@@ -15,7 +12,8 @@ import { Order } from 'src/app/shared/models/Order';
 export class OrdersPageComponent {
   orders!: Order[];
   
-  constructor(activatedRoute:ActivatedRoute, orderService:OrderService) {
+  constructor(activatedRoute:ActivatedRoute,
+              orderService:OrderService) {
     //ogni volta che 'params' cambia, chiama la funzione dentro 'subscribe()'
     activatedRoute.params.subscribe((params) => {
       orderService.getAllOrders(params.userToken).subscribe((serverOrders) => {

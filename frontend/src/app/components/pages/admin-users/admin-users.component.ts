@@ -13,7 +13,8 @@ import { User } from 'src/app/shared/models/User';
 export class AdminUsersComponent {
   users!: User[];
 
-  constructor(activatedRoute: ActivatedRoute, private adminService:AdminService) {
+  constructor(activatedRoute: ActivatedRoute,
+              private adminService:AdminService) {
     let usersObservable: Observable<User[]>; //per ottere gli observable di tutti i metodi chiamati che si connettono al backend, poi facendo subscribe per ottere i film
     //altrimenti dovrei fare subscribe per ognuno dei metodi chiamati separatamente
     

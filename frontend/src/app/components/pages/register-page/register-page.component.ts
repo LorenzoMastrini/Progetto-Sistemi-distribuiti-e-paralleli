@@ -19,8 +19,7 @@ export class RegisterPageComponent implements OnInit {
     private formBuilder:FormBuilder,
     private userService:UserService,
     private activatedRoute: ActivatedRoute,
-    private router:Router
-  ) { }
+    private router:Router) { }
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({

@@ -18,10 +18,10 @@
             </text-input>
 
             <text-input
-                [control]="fc.plot"
+                [control]="fc.genres"
                 [showErrorsWhen]="isSubmitted"
                 type="text"
-                label="Trama">
+                label="Genere">
             </text-input>
 
             <text-input
@@ -29,6 +29,20 @@
                 [showErrorsWhen]="isSubmitted"
                 type="text"
                 label="Regista">
+            </text-input>
+
+            <text-input
+                [control]="fc.plot"
+                [showErrorsWhen]="isSubmitted"
+                type="text"
+                label="Trama">
+            </text-input>
+
+            <text-input
+                [control]="fc.imgUrl"
+                [showErrorsWhen]="isSubmitted"
+                type="text"
+                label="URL della copertina">
             </text-input>
 
             <default-button text="Aggiungi film"></default-button>

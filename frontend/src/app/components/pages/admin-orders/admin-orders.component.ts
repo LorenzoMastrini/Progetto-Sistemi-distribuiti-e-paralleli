@@ -13,7 +13,8 @@ import { Order } from 'src/app/shared/models/Order';
 export class AdminOrdersComponent {
   orders!: Order[];
 
-  constructor(activatedRoute: ActivatedRoute, adminService:AdminService) {
+  constructor(activatedRoute: ActivatedRoute,
+              adminService:AdminService) {
     let ordersObservable: Observable<Order[]>; //per ottere gli observable di tutti i metodi chiamati che si connettono al backend, poi facendo subscribe per ottere i film
     //altrimenti dovrei fare subscribe per ognuno dei metodi chiamati separatamente
     
@@ -23,7 +24,6 @@ export class AdminOrdersComponent {
 
       ordersObservable.subscribe((serverOrders) => {
         this.orders = serverOrders;
-        console.log(serverOrders);
       });
     });
   }
