@@ -37,11 +37,8 @@ export class AdminAddScheduleComponent {
       return; //torna se il form non è valido
     }
 
-    this.adminService.addSchedule({film: this.fc.scheduleFilm.value, movieTime: this.fc.scheduleTime.value}).subscribe((serverNewSchedule) => {
-      //let prova: Schedule = serverNewSchedule;
-      //console.log(prova);
+    this.adminService.addSchedule({film: this.fc.scheduleFilm.value, movieTime: this.fc.scheduleTime.value}).subscribe(_ => {
+      window.location.reload();
     });
-
-    window.location.reload();
   }
 }
