@@ -4,7 +4,7 @@ from database.init_db import connect_to_db
 from flask import jsonify, request
 
 
-def get_films():                                            #funzione che interroga il DB e restituisce la lista di tutti i film in un dictionary
+def get_films():                                            #funzione per recuperare tutti i film nel database
     films = []
     try:
         conn = connect_to_db()
@@ -29,7 +29,7 @@ def get_films():                                            #funzione che interr
 
     return films
 
-def get_film_schedule(film_name):                          #funzione per che interroga il DB e restituisce la programmazione riguardante un film specifico in un dictionary
+def get_film_schedule(film_name):                          #funzione per recuperare gli orari associati ad un film specifico
     schedule = []
     try:
         conn = connect_to_db()
@@ -52,7 +52,7 @@ def get_film_schedule(film_name):                          #funzione per che int
     
     return schedule
 
-def get_film_by_name(film_name):                          #funzione per che interroga il DB e restituisce la programmazione riguardante un film specifico in un dictionary
+def get_film_by_name(film_name):                          #funzione per recuperare un film specifico nel database
     film = {}
     try:
         conn = connect_to_db()
@@ -80,17 +80,17 @@ def reserve(reserve_info):                          #funzione per la prenotazion
         cur.execute("SELECT seats_available FROM schedule WHERE movie_time = ?", (reserve_info["movieTime"],))
         
         row = cur.fetchone()
-        seats_string = str(row[0])
-        seats_list = seats_string.split(' ')
+        seats_string = str(row[0])                  #converto in stringa l'elemento contenuto nell'oggetto row
+        seats_list = seats_string.split(' ')        #converto in lista la stringa e separo gli elementi in base ad un certo carattere
 
-        reserve_info_seats = str(reserve_info["seats"])
+        reserve_info_seats = str(reserve_info["seats"])                                     #traduzione inversa per quello che viene passato dall'utente
         reserve_info_seats = reserve_info_seats.translate({ord(i): None for i in "[],'"})
 
-        for i in reserve_info["seats"]:
+        for i in reserve_info["seats"]:             #rimuovo dalla lista dei posti disponibili in sala quelli prenotati dall'utente
             seats_list.remove(i)
         
-        cur.execute("UPDATE schedule SET seats_available = ? WHERE movie_time = ?", (" ".join(seats_list), reserve_info["movieTime"]))
-        cur.execute("INSERT INTO reservation (movie_time, user_id, n_seats) VALUES (?, ?, ?)", (reserve_info["movieTime"], reserve_info["userId"], reserve_info_seats))
+        cur.execute("UPDATE schedule SET seats_available = ? WHERE movie_time = ?", (" ".join(seats_list), reserve_info["movieTime"]))                                   #aggiorna i nuovi posti disponibili nella sala    
+        cur.execute("INSERT INTO reservation (movie_time, user_id, n_seats) VALUES (?, ?, ?)", (reserve_info["movieTime"], reserve_info["userId"], reserve_info_seats))  #aggiunto una nuova prenotazione nella tabella reservation
 
         conn.commit()    
     except: 
@@ -98,23 +98,23 @@ def reserve(reserve_info):                          #funzione per la prenotazion
     finally:
         conn.close()    
     
-    return reserve_info
+    return reserve_info                             #ritorno le informazioni della prenotazione
 
-@app.route('/api/films', methods=['GET'])
+@app.route('/api/films', methods=['GET'])                               #route a cui il client fa richiesta per vedere tutti i film nel database
 def api_get_films():
-    return jsonify(get_films())                                         #ritorno l'output della funzione get_film() in JSON per l'invio dei dati con la HTTP response
+    return jsonify(get_films())                                         
 
-@app.route('/api/films/schedule/<film_name>', methods=['GET'])          #route a cui il client fa richiesta con metodo GET per vedere la schedule di un film specifico
+@app.route('/api/films/schedule/<film_name>', methods=['GET'])          #route a cui il client fa richiesta per recuperare la schedule di un film specifico
 def api_get_film_schedule(film_name):
     return jsonify(get_film_schedule(film_name))                
 
-@app.route('/api/films/<film_name>', methods=['GET'])                   #route a cui il client fa richiesta con metodo GET per vedere le informazioni su un film specifico
+@app.route('/api/films/<film_name>', methods=['GET'])                   #route a cui il client fa richiesta per recuperare le informazioni su un film specifico
 def api_get_film(film_name):
     return jsonify(get_film_by_name(film_name))                                   
 
-@app.route('/api/films/reserve', methods=['POST'])                      #route a cui il client fa richiesta con metodo PUT per prenotare il numero di posti che ha scelto
+@app.route('/api/films/reserve', methods=['POST'])                      #route a cui il client fa richiesta per prenotare il numero di posti che ha scelto
 def api_reserve():
-    reserve_info = request.get_json()                                   #prendo il body della richiesta
+    reserve_info = request.get_json()                                   
     return jsonify(reserve(reserve_info))
 
 
