@@ -25,8 +25,10 @@ export class AdminAddFilmComponent {
       //il primo valore di entrambi è il valore di default, e il secondo sono i validators
       name: ['', Validators.required],
       duration: ['', Validators.required],
+      genres: ['', Validators.required],
+      director: ['', Validators.required],
       plot: ['', Validators.required],
-      director: ['', Validators.required]
+      imgUrl: ['', Validators.required]
     });
   }
 
@@ -38,6 +40,8 @@ export class AdminAddFilmComponent {
   submit() {
     this.isSubmitted = true;
 
+    console.log("prova fuori");
+
     if(this.addFilmForm.invalid) {
       return; //torna se il form non è valido
     }
@@ -45,12 +49,15 @@ export class AdminAddFilmComponent {
     this.adminService.addFilm({
                                 name: this.fc.name.value,
                                 duration: parseInt(this.fc.duration.value),
+                                genres: this.fc.genres.value,
+                                director: this.fc.director.value,
                                 plot: this.fc.plot.value,
-                                director: this.fc.director.value
+                                imgUrl: this.fc.imgUrl.value
     }).subscribe((serverNewFilm) => {
       //NON LO TORNA NON SO COME MAI (forse non necessario)
-      //let prova: Film = serverNewFilm;
+      let prova: Film = serverNewFilm;
       //console.log(prova);
+      console.log("prova dentro");
     });
 
     this.router.navigateByUrl("/admin"); //torna alla home dell'admin

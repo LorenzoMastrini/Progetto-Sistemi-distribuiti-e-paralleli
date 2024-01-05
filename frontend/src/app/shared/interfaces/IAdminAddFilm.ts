@@ -1,6 +1,8 @@
 export interface IAdminAddFilm {
     name: string;
     duration: number;
-    plot: string;
+    genres: string;
     director: string;
+    plot: string;
+    imgUrl: string;
 }

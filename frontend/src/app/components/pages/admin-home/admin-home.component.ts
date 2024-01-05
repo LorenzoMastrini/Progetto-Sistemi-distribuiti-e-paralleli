@@ -49,4 +49,10 @@ export class AdminHomeComponent {
       window.location.reload(); //refresh della pagina per mostrare le informazioni aggiornate
     });
   }
+
+  deleteFilm(filmName:string){
+    this.adminService.deleteFilm(filmName).subscribe(() => {
+      window.location.reload(); //refresh della pagina per mostrare le informazioni aggiornate
+    });
+  }
 }

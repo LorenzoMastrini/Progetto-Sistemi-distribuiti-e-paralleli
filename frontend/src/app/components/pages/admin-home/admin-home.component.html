@@ -31,7 +31,7 @@
                 </td>
                 <td>
                     <button (click)="deleteSchedule(schedule.scheduleId)" class="delete-schedule">
-                        Elimina oraraio
+                        Elimina orario
                     </button>
                 </td>
             </tr>
@@ -50,6 +50,10 @@
                         {{film.name}}
                     </span>
                 </div>
+                
+                <button (click)="deleteFilm(film.name)" class="delete-film">
+                    Elimina Film
+                </button>
             </div>
         </div>
 
