@@ -30,13 +30,6 @@ export class UserService {
     return this.userSubject.value; //ultimo valore dello userSubject
   }
 
-  logout() {
-    this.userSubject.next(new User());
-    localStorage.removeItem(USER_KEY);
-    this.router.navigateByUrl('/');
-    window.location.reload(); //refresh della pagina
-  }
-
   //uso localStorage per salvare l'utente così da non dover rifare il login dopo un refresh della pagina (come cart-page)
   private setUserToLocalStorage(user:User) {
     localStorage.setItem(USER_KEY, JSON.stringify(user)); //converto l'utente in JSON
@@ -68,6 +61,13 @@ export class UserService {
         }
       })
     );
+  }
+  
+  logout() {
+    this.userSubject.next(new User());
+    localStorage.removeItem(USER_KEY);
+    window.location.reload(); //refresh della pagina
+    this.router.navigateByUrl('/');
   }
 
   register(userRegister:IUserRegister): Observable<User> {

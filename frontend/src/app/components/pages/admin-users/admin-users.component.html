@@ -1,53 +1,37 @@
-<div class="container">
-    <!-- <div class="user">
-        <div *ngFor="let user of users">
-            <div class="user-info">
-                {{ user.name }}
-                {{ user.email }}
-                {{ user.isAdmin }}
-            </div>
+&nbsp;
+<table class="schedules-list">
+    <tr>
+        <td colspan="3">
+            <h3>Lista degli utenti</h3>
+        </td>
+    </tr>
 
-            <div class="buttons-container">
-                <button (click)="changeAdminStatus(user.id)" class="change-admin-status">
-                    Cambia stato
-                </button>
-            </div>
-        </div>
-    </div> -->
-    <table class="schedules-list">
-        <tr>
-            <td colspan="3">
-                <h3>Lista degli utenti</h3>
-            </td>
-        </tr>
+    <tr>
+        <td colspan="1">
+            <h4>Username</h4>
+        </td>
+        <td colspan="1">
+            <h4>Email</h4>
+        </td>
+        <td colspan="1">
+            <h4>Stato</h4>
+        </td>
+    </tr>
 
-        <tr>
-            <td colspan="1">
-                <h4>Username</h4>
-            </td>
-            <td colspan="1">
-                <h4>Email</h4>
-            </td>
-            <td colspan="1">
-                <h4>Stato</h4>
-            </td>
-        </tr>
-
-        <tr *ngFor="let user of users">
-            <td>
-                {{ user.name }}
-            </td>
-            <td>
-                {{ user.email }}
-            </td>
-            <td>
-                {{ user.isAdmin }}
-            </td>
-            <td>
-                <button (click)="changeAdminStatus(user.id)" class="change-admin-status">
-                    Cambia stato
-                </button>
-            </td>
-        </tr>
-    </table>
-</div>
+    <tr *ngFor="let user of users">
+        <td>
+            {{ user.name }}
+        </td>
+        <td>
+            {{ user.email }}
+        </td>
+        <td>
+            {{ user.isAdmin }}
+        </td>
+        <td>
+            <button (click)="changeAdminStatus(user.id)" class="change-admin-status">
+                Cambia stato
+            </button>
+        </td>
+    </tr>
+</table>

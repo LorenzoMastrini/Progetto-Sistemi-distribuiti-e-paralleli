@@ -1,8 +1,16 @@
 header {
-    position: relative;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
     background: black;
     padding: 0;
     border: 0 none black;
+}
+
+.container {
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between; /*il logo rimane a sinistra mentre gli altri elementi in fondo a destra*/
 }
 
 a {
@@ -10,14 +18,8 @@ a {
 }
 
 a:hover {
-    color: grey;
+    opacity: 0.8;
     cursor: pointer;
-}
-
-.container {
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between; /*il logo rimane a sinistra mentre gli altri elementi in fondo a destra*/
 }
 
 .logo {

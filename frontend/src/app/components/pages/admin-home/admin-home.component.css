@@ -1,5 +1,12 @@
+.container {
+    margin-top: 3rem;
+    width: 100%;
+}
+
 .schedules-container {
-    border: 1px solid #eeeeee;
+    border-bottom: 1px solid grey;
+    width: 100%;
+    margin-bottom: 3rem;
 }
 
 table {
@@ -10,7 +17,7 @@ table {
 }
 
 h3 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     margin-top: 0.5rem;
     margin-left: 0.3rem;
     color: grey;
@@ -23,6 +30,7 @@ td {
 .add-schedule {
     justify-content: center;
     display: flex;
+    margin-bottom: 3rem;
 }
 
 .delete-schedule {
@@ -55,7 +63,7 @@ td {
 
 .movies-container {
     margin-top: 3rem;
-    border: 1px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
 }
 
 .films-grid-container {

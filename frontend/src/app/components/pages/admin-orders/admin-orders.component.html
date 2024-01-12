@@ -1,56 +1,44 @@
-<div class="container">
-    <!-- <div class="order">
-        <div *ngFor="let order of orders">
-            <div class="order-info">
-                {{ order.id}}
-                {{ order.userId }}
-                {{ order.movieTime }}
-                {{ order.seats }}
-            </div>
-        </div>
-    </div>  -->
-    
-    <table class="schedules-list">
-        <tr>
-            <td colspan="3">
-                <h3>Lista degli ordini:</h3>
-            </td>
-        </tr>
+&nbsp;
+<table class="schedules-list">
+    <tr>
+        <td colspan="3">
+            <h3>Lista degli ordini:</h3>
+        </td>
+    </tr>
 
-        <tr>
-            <td colspan="1">
-                <h4>Id Ordine</h4>
-            </td>
-            <td colspan="1">
-                <h4>Id Utente</h4>
-            </td>
-            <td colspan="1">
-                <h4>Email</h4>
-            </td>
-            <td colspan="1">
-                <h4>Orario</h4>
-            </td>
-            <td colspan="1">
-                <h4>Posti prenotati</h4>
-            </td>
-        </tr>
+    <tr>
+        <td colspan="1">
+            <h4>Id Ordine</h4>
+        </td>
+        <td colspan="1">
+            <h4>Id Utente</h4>
+        </td>
+        <td colspan="1">
+            <h4>Email</h4>
+        </td>
+        <td colspan="1">
+            <h4>Orario</h4>
+        </td>
+        <td colspan="1">
+            <h4>Posti prenotati</h4>
+        </td>
+    </tr>
 
-        <tr *ngFor="let order of orders">
-            <td>
-                {{ order.orderId }}
-            </td>
-            <td>
-                {{ order.userId }}
-            </td>
-            <td>
-                {{ order.email }}
-            </td>
-            <td>
-                {{ order.movieTime }}
-            </td>
-            <td>
-                {{ order.seats }}
-            </td>
-        </tr>
-    </table>
-</div>
+    <tr *ngFor="let order of orders">
+        <td>
+            {{ order.orderId }}
+        </td>
+        <td>
+            {{ order.userId }}
+        </td>
+        <td>
+            {{ order.email }}
+        </td>
+        <td>
+            {{ order.movieTime }}
+        </td>
+        <td>
+            {{ order.seats }}
+        </td>
+    </tr>
+</table>

@@ -3,11 +3,11 @@
     justify-content: center;
     align-items: center;
     height: 100%;
-    margin-top: 3rem;
 }
 
 .details {
     width: 25rem;
+    margin-top: 3rem;
 }
 
 .login {

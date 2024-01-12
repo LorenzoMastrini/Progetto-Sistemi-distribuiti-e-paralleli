@@ -1,12 +1,12 @@
 table {
     width: 100%;
-    border: 1px solid #eeeeee;
-    margin-top: 1rem;
+    margin-top: 3rem;
     border-radius: 5px;
     padding: 0.5rem 1rem;
 }
 
 h3 {
+    font-size: 1.6rem;
     margin-top: 0.5rem;
     margin-left: 0.3rem;
     color: grey;
